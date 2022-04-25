@@ -1,0 +1,9 @@
+.elements{
+    width: calc(100% - 2 * 200px);
+    margin: 45px auto 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    column-gap: 17px;
+    row-gap: 20px;
+}
