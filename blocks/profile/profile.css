@@ -3,4 +3,5 @@
     margin: 45px auto;
     min-height: 74px;
     display: flex;
+    justify-content: space-between;
 }
