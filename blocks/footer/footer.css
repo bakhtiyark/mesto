@@ -1,5 +1,12 @@
 .footer{
-    width: calc(100% - 2 * 200px);
+    max-width: calc(100% - 2 * 200px);
     
     margin: 45px auto 40px;
+}
+
+@media screen and (max-width: 767px) {
+    .footer {
+        max-width: 100%;
+        flex-direction: column;
+    }
 }

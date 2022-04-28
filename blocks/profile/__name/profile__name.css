@@ -1,9 +1,19 @@
-.profile__name{
-margin: 0;
-padding: 0;
-margin-left: 30px;
-font-weight: 500;
-font-size: 42px;
-line-height: 48px;
-padding-top: 22px;
+.profile__name {
+    margin: 0;
+    padding: 0;
+    max-width: fit-content;
+    margin-left: 30px;
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 48px;
+    padding-top: 22px;
+}
+
+@media screen and (max-width: 767px) {
+    .profile__name {
+        margin: 0;
+        font-size: 27px;
+        line-height: 33px;
+        text-align: center;
+    }
 }

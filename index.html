@@ -22,16 +22,21 @@
     <h1 class="profile__name">Жак-Ив Кусто</h1>
     <p class="profile__subtitle">Исследователь океана</p>
     </div>
-    <a href=""><img 
-        src="./images/edit-button.svg" 
-        alt="Кнопка редактирования" 
-        class="profile__button-edit"
-        ></a>
+    <button class="profile__button-edit"></button>
     </div>
-        <a href=""><img 
-            src="./images/add-button.svg" 
-            alt="Кнопка добавления" 
-            class="profile__button-add"></a>
+    <button class="profile__button-add">+</button>    
+            <div class="popup popup_profile">
+                <div class="popup__container">
+                    <form class="popup__form" name="popupProfileForm" novalidate>
+                        <h2 class="popup__title">Редактировать профиль</h2>
+                        <input id="profile-name-input" class="popup__input popup__input_profile_name" type="text" name="profileFormName" minlength="2" maxlength="40" required>
+                        <input id="profile-status-input" class="popup__input popup__input_profile_status" type="text" name="profileFormStatus" minlength="2" maxlength="200" required>
+                        <button type="submit" class="popup__save-btn popup__save-btn_profile">Сохранить</button>
+                    </form>
+                    <button type="button" class="popup__close-icon"></button>
+                </div>
+            </div>
+
 </section>
 <section class="elements">
     <div class="element">
@@ -40,34 +45,7 @@
         class="element__image">
         <div class="element__title">
             <p>Карачаевск</p>
-            <img src="./images/heart-icon.svg" alt="Иконка сердца"></div>
-    </div>
-
-    <div class="element">
-        <img src="./images/element-karachayevsk.png" 
-        alt="Карачаевск" 
-        class="element__image">
-        <div class="element__title">
-            <p>Карачаевск</p>
-            <img src="./images/heart-icon.svg" alt="Иконка сердца"></div>
-    </div>
-
-    <div class="element">
-        <img src="./images/element-karachayevsk.png" 
-        alt="Карачаевск" 
-        class="element__image">
-        <div class="element__title">
-            <p>Карачаевск</p>
-            <img src="./images/heart-icon.svg" alt="Иконка сердца"></div>
-    </div>
-
-    <div class="element">
-        <img src="./images/element-karachayevsk.png" 
-        alt="Карачаевск" 
-        class="element__image">
-        <div class="element__title">
-            <p>Карачаевск</p>
-            <img src="./images/heart-icon.svg" alt="Иконка сердца"></div>
+            <button class="element__like-button"></button></div>
     </div>
     <div class="element">
         <img src="./images/element-karachayevsk.png" 
@@ -75,7 +53,7 @@
         class="element__image">
         <div class="element__title">
             <p>Карачаевск</p>
-            <img src="./images/heart-icon.svg" alt="Иконка сердца"></div>
+            <button class="element__like-button"></button></div>
     </div>
     <div class="element">
         <img src="./images/element-karachayevsk.png" 
@@ -83,9 +61,40 @@
         class="element__image">
         <div class="element__title">
             <p>Карачаевск</p>
-            <img src="./images/heart-icon.svg" alt="Иконка сердца"></div>
+            <button class="element__like-button"></button></div>
     </div>
-    
+    <div class="element">
+        <img src="./images/element-karachayevsk.png" 
+        alt="Карачаевск" 
+        class="element__image">
+        <div class="element__title">
+            <p>Карачаевск</p>
+            <button class="element__like-button"></button></div>
+    </div>
+    <div class="element">
+        <img src="./images/element-karachayevsk.png" 
+        alt="Карачаевск" 
+        class="element__image">
+        <div class="element__title">
+            <p>Карачаевск</p>
+            <button class="element__like-button"></button></div>
+    </div>
+    <div class="element">
+        <img src="./images/element-karachayevsk.png" 
+        alt="Карачаевск" 
+        class="element__image">
+        <div class="element__title">
+            <p>Карачаевск</p>
+            <button class="element__like-button"></button></div>
+    </div>
+    <div class="element">
+        <img src="./images/element-karachayevsk.png" 
+        alt="Карачаевск" 
+        class="element__image">
+        <div class="element__title">
+            <p>Карачаевск</p>
+            <button class="element__like-button"></button></div>
+    </div>
 </section>
 </main>
 <footer class="footer">
