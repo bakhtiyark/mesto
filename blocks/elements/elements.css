@@ -1,4 +1,4 @@
-.elements{
+.elements {
     max-width: calc(100% - 2 * 200px);
     margin: 45px auto 40px;
     display: grid;

@@ -1,9 +1,10 @@
 .profile__avatar {
     border-radius: 50%;
-    max-width:120px;
+    max-width: 120px;
     max-height: 120px;
     grid-area: avatar;
 }
+
 @media screen and (max-width: 767px) {
     .profile__avatar {
         justify-self: center;
