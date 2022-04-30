@@ -3,7 +3,10 @@
 }
 @media screen and (max-width: 767px) {
     .profile__card {
-        max-width: 100%;
-        flex-direction: column;
+        display: grid;
+        grid-template-areas:
+          'avatar avatar'
+          'info edit-button';
+        gap: 10px
     }
-}
+}   

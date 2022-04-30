@@ -16,6 +16,17 @@
 </header>
 <main>
 <section class="profile">
+    <div class="profile popup">
+        <div class="popup__container">
+            <form class="popup__form">
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <input id="profile-name-input" class="popup__input popup__input_profile_name" type="text" name="profileFormName" minlength="2" maxlength="40" required>
+                <input id="profile-secondary-input" class="popup__input popup__input_profile_secondary" type="text" name="profileFormSecondary" minlength="2" maxlength="200" required>
+                <button type="submit" class="popup__save-button">Сохранить</button>
+            </form>
+            <button type="button" class="popup__close-icon"></button>
+        </div>
+    </div>
     <div class="profile__card">
         <img src="./images/profile-pic.png" alt="Аватар" class="profile__avatar">
     <div class="profile__info">
@@ -25,18 +36,6 @@
     <button class="profile__button-edit"></button>
     </div>
     <button class="profile__button-add">+</button>    
-            <div class="popup popup_profile">
-                <div class="popup__container">
-                    <form class="popup__form" name="popupProfileForm" novalidate>
-                        <h2 class="popup__title">Редактировать профиль</h2>
-                        <input id="profile-name-input" class="popup__input popup__input_profile_name" type="text" name="profileFormName" minlength="2" maxlength="40" required>
-                        <input id="profile-status-input" class="popup__input popup__input_profile_status" type="text" name="profileFormStatus" minlength="2" maxlength="200" required>
-                        <button type="submit" class="popup__save-btn popup__save-btn_profile">Сохранить</button>
-                    </form>
-                    <button type="button" class="popup__close-icon"></button>
-                </div>
-            </div>
-
 </section>
 <section class="elements">
     <div class="element">
@@ -99,7 +98,7 @@
 </main>
 <footer class="footer">
     <p class="footer__copyright">© 2020 Mesto</p>
-</footer>
-<script src="/scripts/script.js"></script>
+</footer>   
+<script src="./scripts/script.js"></script>
 </body>
 </html>

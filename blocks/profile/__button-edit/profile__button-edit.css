@@ -14,7 +14,18 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    grid-area: edit-button;
 }
 .profile__button-edit:hover{
     opacity: 0.7;
 }
+
+@media screen and (max-width: 767px) {
+    .profile__button-edit {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    align-self: center;
+    margin-bottom: 10px;
+    }
+}   
