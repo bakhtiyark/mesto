@@ -2,7 +2,7 @@
     width: calc(100% - 2 * 200px);
     margin: 45px auto;
     padding-bottom: 40px;
-    border-bottom: 1px solid rgba(84, 84, 84, 1)
+    border-bottom: 1px solid rgba(84, 84, 84, 1);
 }
 
 @media screen and (max-width: 767px) {
