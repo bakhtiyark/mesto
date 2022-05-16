@@ -37,6 +37,31 @@
                 <button type="button" class="profile__button profile__button_edit"></button>
             </div>
             <button type="button" class="profile__button profile__button_add"></button>
+
+
+            <div class="popup" id="add_place">
+                <div class="popup__container">
+                    <button class="popup__close-icon" type="button" id="place-close-button" name="place-close"></button>
+                    <h2 class="popup__label">Новое место</h2>
+                    <form class="popup__form" id="place-edit" name="card" method="get" novalidate>
+                        <div class="popup__input-wrapper">
+                            <input required minlength="2" maxlength="200" 
+                            class="popup__input" 
+                            id="place-name-input"
+                            name="place-name" type="text" placeholder="Название"> 
+                            <span id="place-name-input-error" class="popup__error"></span>
+                        </div>
+                        <div class="popup__input-wrapper">
+                            <input type="url" required 
+                            class="popup__input" 
+                            id="place-link-input" 
+                            name="place-link"
+                            placeholder="Ссылка на картинку">
+                            <span id="place-link-input-error" class="popup__error"></span>
+                        </div>
+                        <button class="popup__save-button" type="submit">Сохранить</button>
+
+
         </section>
         <section class="elements">
             <div class="element">
@@ -44,6 +69,7 @@
                 <div class="element__card">
                     <h3 class="element__title">Домбай</h3>
                     <button type="button" class="element__like-button"></button>
+                    <button class="element__delete" type="button"></button>
                 </div>
             </div>
             <div class="element">
@@ -65,6 +91,7 @@
                 <div class="element__card">
                     <h3 class="element__title">Карачаевск</h3>
                     <button type="button" class="element__like-button"></button>
+                    <button class="element__delete" type="button"></button>
                 </div>
             </div>
             <div class="element">
@@ -82,6 +109,16 @@
                 </div>
             </div>
         </section>
+        <template id="elements-template">
+            <article class="element">
+                <img class="element__image" id="element-image" alt="Изображение природы">
+                <div class="element__data">
+                    <h2 class="element__title"></h2>
+                    <button class="element__like-button" type="button"></button>
+                </div>
+                <button class="element__delete" type="button"></button>
+            </article>
+        </template>
     </main>
     <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto</p>
