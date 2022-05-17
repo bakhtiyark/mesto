@@ -35,17 +35,14 @@ function addButtonPressed() {
 function openPopUp(e) {
   const parent = e.currentTarget.parentNode;
   const grandparent = parent.parentNode;
-  if (popup.classList.contains('popup_opened') === false) {
+  if(popup.classList.contains('popup_opened') === false){
     grandparent.classList.add('popup_opened');
   }
 }
 function closePopUp(e) {
   const parent = e.currentTarget.parentNode;
   const grandparent = parent.parentNode;
-  if (grandparent.classList.contains('popup_opened') === true) {
-    grandparent.classList.remove('popup_opened');
-    grandparent.classList.add('popup_closed');
-  }
+  grandparent.classList.remove('popup_opened');
 }
 
 function profileCardUpdate(e) {
