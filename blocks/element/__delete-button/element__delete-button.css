@@ -1,13 +1,13 @@
-.element__delete {
+.element__delete-button {
     padding: 0;
     margin: 0;
     height: 19px;
     width: 18px;
     border: none;
     background-color: transparent;
-    position: absolute;
-    top: 21px;
-    right: 20px;
+    position: relative;
+    top: -350px;
+    left: 250px;
     background-image: url(../../../images/delete-button.svg);
     background-size: 100%;
     background-position: center;
@@ -17,6 +17,6 @@
     opacity: 1;
 }
 
-.element__delete:hover {
+.element__delete-button:hover {
     opacity: .5;
 }

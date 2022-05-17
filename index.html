@@ -43,82 +43,39 @@
                 <div class="popup__container">
                     <button class="popup__close-icon" type="button" id="place-close-button" name="place-close"></button>
                     <h2 class="popup__label">Новое место</h2>
-                    <form class="popup__form" id="place-edit" name="card" method="get" novalidate>
+                    <form class="popup__form" id="place-add" name="card" method="get" novalidate>
                         <div class="popup__input-wrapper">
-                            <input required minlength="2" maxlength="200" 
-                            class="popup__input" 
-                            id="place-name-input"
-                            name="place-name" type="text" placeholder="Название"> 
-                            <span id="place-name-input-error" class="popup__error"></span>
+                            <input required minlength="2" maxlength="200" class="popup__input" id="place-name-input"
+                                name="place-name" type="text" placeholder="Название">
                         </div>
                         <div class="popup__input-wrapper">
-                            <input type="url" required 
-                            class="popup__input" 
-                            id="place-link-input" 
-                            name="place-link"
-                            placeholder="Ссылка на картинку">
-                            <span id="place-link-input-error" class="popup__error"></span>
+                            <input type="url" required class="popup__input" id="place-link-input" name="place-link"
+                                placeholder="Ссылка на картинку">
                         </div>
                         <button class="popup__save-button" type="submit">Сохранить</button>
 
 
         </section>
         <section class="elements">
-            <div class="element">
-                <img src="./images/element-dombay.png" alt="Домбай" class="element__image">
-                <div class="element__card">
-                    <h3 class="element__title">Домбай</h3>
-                    <button type="button" class="element__like-button"></button>
-                    <button class="element__delete" type="button"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img src="./images/element-elbrus.png" alt="Эльбрус" class="element__image">
-                <div class="element__card">
-                    <h3 class="element__title">Гора Эльбрус</h3>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img src="./images/element-karachayevsk.png" alt="Карачаевск" class="element__image">
-                <div class="element__card">
-                    <h3 class="element__title">Карачаевск</h3>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img src="./images/element-karachayevsk.png" alt="Карачаевск" class="element__image">
-                <div class="element__card">
-                    <h3 class="element__title">Карачаевск</h3>
-                    <button type="button" class="element__like-button"></button>
-                    <button class="element__delete" type="button"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img src="./images/element-dombay.png" alt="Домбай" class="element__image">
-                <div class="element__card">
-                    <h3 class="element__title">Домбай</h3>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
-            <div class="element">
-                <img src="./images/element-elbrus.png" alt="Эльбрус" class="element__image">
-                <div class="element__card">
-                    <h3 class="element__title">Гора Эльбрус</h3>
-                    <button type="button" class="element__like-button"></button>
-                </div>
-            </div>
+
         </section>
-        <template id="elements-template">
-            <article class="element">
-                <img class="element__image" id="element-image" alt="Изображение природы">
-                <div class="element__data">
-                    <h2 class="element__title"></h2>
-                    <button class="element__like-button" type="button"></button>
-                </div>
-                <button class="element__delete" type="button"></button>
-            </article>
-        </template>
+        <div class="popup popup_open-card">
+            <div class="popup__image-container">
+                <button class="popup__close popup__close-icon popup__close-icon_position-place" type="button"></button>
+                <img class="popup__image">
+                <p class="popup__place-name"></p>
+            </div>
+
+            <template id="elements-template">
+                <article class="element">
+                    <img class="element__image" id="element-image" alt="Иллюстрация">
+                    <div class="element__card">
+                        <h2 class="element__title"></h2>
+                        <button class="element__like-button" id="like-button" type="button"></button>
+                    </div>
+                    <button class="element__delete-button" type="button"></button>
+                </article>
+            </template>
     </main>
     <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto</p>
