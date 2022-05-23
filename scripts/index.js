@@ -10,7 +10,7 @@ const buttonEdit = profile.querySelector('.profile__button_edit');
 const buttonAdd = profile.querySelector('.profile__button_add');
 const buttonSubmit = profile.querySelector(".popup__save-button")
 const buttonClosePopUp = profile.querySelector('.popup__close-icon');
-const popUp = document.querySelector(".popup");
+
 const profilePopUp = document.querySelector("#profile__popup");
 const placePopUp = document.querySelector("#add_place");
 const popUpForm = document.querySelector("#popup__form");
@@ -31,19 +31,15 @@ const placebuttonClosePopUp = document.querySelector("#place-close-button")
 function editButtonPressed() {
   profileNameInput.value = profileName.textContent;
   profileSecondaryInput.value = profileSecondary.textContent;
-  profilePopUp.classList.add("popup_opened");
+  openPopUp(profilePopUp)
 }
 
 function buttonAddPressed() {
-  placePopUp.classList.add("popup_opened");
+  openPopUp(placePopUp);
 }
 
-function openPopUp(e) {
-  const parent = e.currentTarget.parentNode;
-  const grandparent = parent.parentNode;
-  if (popup.classList.contains('popup_opened') === false) {
-    grandparent.classList.add('popup_opened');
-  }
+function openPopUp(popUp) {
+  popUp.classList.add('popup_opened');
 }
 
 function closePopUp(e) {
@@ -56,7 +52,7 @@ function profileCardUpdate(e) {
   e.preventDefault();
   profileName.textContent = profileNameInput.value;
   profileSecondary.textContent = profileSecondaryInput.value;
-  popUp.classList.remove("popup_opened");
+  closePopUp(e);
 }
 
 popUpForm.addEventListener("submit", profileCardUpdate);
@@ -125,17 +121,14 @@ const createCard = (cardsData) => {
   likeButton.addEventListener("click", processLikeButton)
 
 
-
-  function popupOpenCardToggle() {
-    popupOpenCard.classList.toggle('popup_opened');
-    if (popupOpenCard.classList.contains('popup_opened')) {
-      popupOpenCardPlaceName.textContent = cardsData.name;
-      popupOpenCardImage.src = cardsData.link;
-      popupOpenCardImage.alt = cardsData.name;
-    };
+  function handleImageClick() {
+    openPopUp(popupOpenCard);
+    popupOpenCardPlaceName.textContent = cardsData.name;
+    popupOpenCardImage.src = cardsData.link;
+    popupOpenCardImage.alt = cardsData.name;
   };
 
-  cardLink.addEventListener('click', popupOpenCardToggle);
+  cardLink.addEventListener('click', handleImageClick);
 
   return elementCard;
 }

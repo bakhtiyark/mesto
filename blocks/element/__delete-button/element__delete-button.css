@@ -20,3 +20,8 @@
 .element__delete-button:hover {
     opacity: .5;
 }
+@media screen and (max-width: 767px) {
+    .element__delete-button {
+        top: -330px;
+    }
+}
