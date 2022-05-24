@@ -9,7 +9,6 @@ const profileAvatar = profileCard.querySelector('.profile__avatar');
 const buttonEdit = profile.querySelector('.profile__button_edit');
 const buttonAdd = profile.querySelector('.profile__button_add');
 const buttonSubmit = profile.querySelector(".popup__save-button")
-const buttonClosePopUp = profile.querySelector('.popup__close-icon');
 
 const profilePopUp = document.querySelector("#profile__popup");
 const placePopUp = document.querySelector("#add_place");
@@ -25,8 +24,10 @@ const elementsContainer = document.querySelector(".elements");
 const popupOpenCard = document.querySelector('.popup_open-card');
 const popupOpenCardImage = document.querySelector('.popup__image');
 const popupOpenCardPlaceName = document.querySelector('.popup__place-name');
-const buttonClosePopUpPlace = document.querySelector(".popup__close-icon_position-place")
-const placebuttonClosePopUp = document.querySelector("#place-close-button")
+
+const buttonPlaceClosePopUp = document.querySelector("#place-close-button")
+const buttonCloseProfilePopUp = document.querySelector('#profile-close-button');
+const buttonCloseImagePopUp = document.querySelector('#image-close-button');
 
 function editButtonPressed() {
   profileNameInput.value = profileName.textContent;
@@ -42,10 +43,8 @@ function openPopUp(popUp) {
   popUp.classList.add('popup_opened');
 }
 
-function closePopUp(e) {
-  const parent = e.currentTarget.parentNode;
-  const grandparent = parent.parentNode;
-  grandparent.classList.remove('popup_opened');
+function closePopUp(popUp) {
+  popUp.classList.remove('popup_opened');
 }
 
 function profileCardUpdate(e) {
@@ -57,10 +56,11 @@ function profileCardUpdate(e) {
 
 popUpForm.addEventListener("submit", profileCardUpdate);
 buttonEdit.addEventListener("click", editButtonPressed);
-buttonClosePopUp.addEventListener("click", closePopUp);
 buttonAdd.addEventListener("click", buttonAddPressed);
-placebuttonClosePopUp.addEventListener("click", closePopUp)
 
+buttonPlaceClosePopUp.addEventListener("click", () => closePopUp(placePopUp));
+buttonCloseProfilePopUp.addEventListener("click", () => closePopUp(profilePopUp));
+buttonCloseImagePopUp.addEventListener("click", () => closePopUp(popupOpenCard));
 
 const initialCards = [
   {
@@ -154,5 +154,4 @@ function cardFormSubmitHandler(e) {
   openPopUp(e);
 
 };
-buttonClosePopUpPlace.addEventListener("click", closePopUp);
 popupAddCardForm.addEventListener('submit', cardFormSubmitHandler);
