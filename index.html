@@ -18,10 +18,10 @@
             <div id="profile__popup" class="popup">
                 <div class="popup__container">
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <form class="popup__form" id="popup__form" name="profile-edit">
-                        <input id="profile-name-input" class="popup__input popup__input_profile_name" type="text"
+                    <form class="popup__form" id="popup__form" name="profile-edit" novalidate>
+                        <input id="profile-name-input" class="popup__input popup__text popup__input_profile_name"  type="text"
                             name="profileFormName" minlength="2" maxlength="40" required>
-                        <input id="profile-secondary-input" class="popup__input popup__input_profile_secondary"
+                        <input id="profile-secondary-input" class="popup__input popup__text popup__input_profile_secondary"
                             type="text" name="profileFormSecondary" minlength="2" maxlength="200" required>
                         <button type="submit" class="popup__save-button">Сохранить</button>
                     </form>
@@ -45,11 +45,11 @@
                     <h2 class="popup__label">Новое место</h2>
                     <form class="popup__form" id="place-add" name="card" method="get" novalidate>
                         <div class="popup__input-wrapper">
-                            <input required minlength="2" maxlength="200" class="popup__input" id="place-name-input"
+                            <input required minlength="2" maxlength="200" class="popup__input popup__text" id="place-name-input"
                                 name="place-name" type="text" placeholder="Название">
                         </div>
                         <div class="popup__input-wrapper">
-                            <input type="url" required class="popup__input" id="place-link-input" name="place-link"
+                            <input type="url" required class="popup__input" id="place-link-input popup__link" name="place-link"
                                 placeholder="Ссылка на картинку">
                         </div>
                         <button class="popup__save-button" type="submit">Сохранить</button>
@@ -82,7 +82,9 @@
             <button class="element__delete-button" type="button"></button>
         </article>
     </template>
+    <script src="./scripts/cards.js"></script>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
 </body>
 
 </html>

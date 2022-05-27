@@ -1,3 +1,5 @@
+
+
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector(".profile__name");
 const profileSecondary = profile.querySelector(".profile__subtitle");
@@ -62,32 +64,6 @@ buttonPlaceClosePopUp.addEventListener("click", () => closePopUp(placePopUp));
 buttonCloseProfilePopUp.addEventListener("click", () => closePopUp(profilePopUp));
 buttonCloseImagePopUp.addEventListener("click", () => closePopUp(popupOpenCard));
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 /// Удаление карточки
 
 const deleteElement = (e) => {
@@ -155,3 +131,18 @@ function cardFormSubmitHandler(e) {
 
 };
 popupAddCardForm.addEventListener('submit', cardFormSubmitHandler);
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+    })});
+  formList.forEach((formElement) => {
+    const fieldsetList = Array.from(formElement.querySelectorAll('.form__set'));
+    fieldsetList.forEach(function (fieldSet) {
+      setEventListeners(fieldSet);
+    })
+  }
+  )
+};
