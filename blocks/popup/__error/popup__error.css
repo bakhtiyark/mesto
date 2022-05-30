@@ -1,5 +1,3 @@
 .popup__error{
-    border-style: ridge;
-    border-width: 1px;
-    border-color: #b2a;
+    margin: 0;
 }
