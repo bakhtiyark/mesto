@@ -47,12 +47,23 @@ function closePopUp(popUp) {
   popUp.classList.remove('popup_opened');
 }
 
-const escPressed = (evt) => {
-   if (evt.key === "Escape") {
-    closePopUp(evt.target.closest('.popup_opened'));
+const escPressed = (e) => {
+  if (e.key !== 'Escape') {
+    return;
   }
+  const popup = document.querySelector('.popup_opened');
+  closePopUp(popup);
 }
 
+const overlayClicked = (evt) => {
+  const popup = evt.target;
+  if (popup.classList.contains("popup")) {
+    closePopUp(popup)
+  };
+};
+
+
+document.addEventListener("mousedown", overlayClicked)
 document.addEventListener("keydown", escPressed)
 
 function profileCardUpdate(e) {
