@@ -45,14 +45,13 @@ function buttonAddPressed() {
 
 function openPopUp(popUp) {
   popUp.classList.add('popup_opened');
-  popUp.parentNode.addEventListener("keydown", escPressed);
-  popUp.addEventListener("mousedown", overlayClicked);
+  document.addEventListener("keydown", escPressed);
+  document.addEventListener("mousedown", overlayClicked);
 }
 
 function closePopUp(popUp) {
   popUp.classList.remove('popup_opened');
-  popUp.parentNode.removeEventListener("keydown", escPressed);
-  popUp.removeEventListener("mousedown", overlayClicked)
+  document.removeEventListener("keydown", escPressed);
 }
 
 
@@ -62,7 +61,7 @@ const overlayClicked = (e) => {
     closePopUp(popup)
   };
 };
-
+document.removeEventListener("mousedown", overlayClicked)
 const escPressed = (e) => {
   if (e.key !== 'Escape') {
     return;
@@ -99,12 +98,10 @@ const handleImageClick = (e) => {
   popupOpenCardPlaceName.textContent = clickedImage.parentNode.querySelector(".element__title").textContent;
   popupOpenCardImage.src = clickedImage.src;
   popupOpenCardImage.alt = clickedImage.name;
-  popupOpenCard.parentNode.parentNode.addEventListener("keydown", escPressed);
   openPopUp(popupOpenCard);
 };
 
 /// Лайканье
-
 const processLikeButton = (e) => {
   e.target.classList.toggle("element__like-button_active")
 };
@@ -128,7 +125,7 @@ const createCard = (cardsData) => {
   const likeButton = elementCard.querySelector('#like-button');
   likeButton.addEventListener("click", processLikeButton)
   cardLink.addEventListener('click', handleImageClick);
-  
+
   return elementCard;
 }
 
@@ -142,13 +139,14 @@ initialCards.forEach((cardsData) => {
 
 const popupAddCard = document.querySelector('#add_place');
 const popupAddCardForm = document.querySelector('#place-add');
+const buttonAddCardSubmit = popupAddCardForm.querySelector(".popup__save-button")
 
 function cardFormSubmitHandler(e) {
   e.preventDefault();
   renderCard({ name: placeInput.value, link: imageInput.value });
   closePopUp(popupAddCard);
-  buttonPlaceSubmit.classList.add("popup__save-button_disabled")
   popupAddCardForm.reset();
+  toggleButtonState(popupAddCardForm, buttonAddCardSubmit, "popup__save-button_disabled")
 };
 popupAddCardForm.addEventListener('submit', cardFormSubmitHandler);
 
