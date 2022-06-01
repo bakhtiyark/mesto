@@ -146,7 +146,12 @@ function cardFormSubmitHandler(e) {
   renderCard({ name: placeInput.value, link: imageInput.value });
   closePopUp(popupAddCard);
   popupAddCardForm.reset();
-  toggleButtonState(popupAddCardForm, buttonAddCardSubmit, "popup__save-button_disabled")
+  disableButton(buttonAddCardSubmit)
 };
+
+function disableButton(saveButton) {
+  saveButton.classList.add("popup__save-button_disabled");
+  saveButton.disabled = true;
+}
 popupAddCardForm.addEventListener('submit', cardFormSubmitHandler);
 
