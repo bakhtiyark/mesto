@@ -18,14 +18,14 @@
             <div id="profile__popup" class="popup">
                 <div class="popup__container">
                     <h2 class="popup__title">Редактировать профиль</h2>
-                    <form class="popup__form" id="popup__form" name="profile-edit">
+                    <form class="popup__form" id="popup__form" name="profile-edit" novalidate>
                         <input id="profile-name-input" class="popup__input popup__input_profile_name" type="text"
                             name="profileFormName" minlength="2" maxlength="40" required>
                         <span class="profile-name-input-error"></span>
                         <input id="profile-secondary-input" class="popup__input popup__input_profile_secondary"
                             type="text" name="profileFormSecondary" minlength="2" maxlength="200" required>
                         <span class="profile-secondary-input-error"></span>
-                        <button type="submit" class="popup__save-button">Сохранить</button>
+                        <button type="submit" class="popup__save-button">Сохранить</button> 
                     </form>
                     <button type="button" class="popup__close-icon" id="profile-close-button"></button>
                 </div>
@@ -55,7 +55,7 @@
                                 name="place-link" placeholder="Ссылка на картинку">
                             <span class="place-link-input-error"></span>
                         </div>
-                        <button class="popup__save-button" type="submit">Сохранить</button>
+                        <button type="submit" class="popup__save-button">Сохранить</button>
                     </form>
                 </div>
             </div>

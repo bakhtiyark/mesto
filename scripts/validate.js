@@ -55,6 +55,14 @@ const checkInputValidity = (
     );
   }
 };
+function disableButton(saveButton) {
+  saveButton.classList.add("popup__save-button_disabled"); 
+  saveButton.disabled = true; 
+}
+function enableButton(saveButton) {
+  saveButton.classList.remove("popup__save-button_disabled"); 
+  saveButton.disabled = false; 
+}
 
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
@@ -62,13 +70,11 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-const toggleButtonState = (inputList, saveButton, disabledSelector) => {
+const toggleButtonState = (inputList, saveButton) => {
   if (hasInvalidInput(inputList)) {
-    saveButton.classList.add(disabledSelector);
-    saveButton.disabled = true;
+    disableButton(saveButton)
   } else {
-    saveButton.classList.remove(disabledSelector);
-    saveButton.disabled = false;
+    enableButton(saveButton);
   }
 };
 
@@ -78,8 +84,7 @@ const setEventListeners = (formElement, validElement) => {
     inputSelector,
     submitButtonSelector,
     errorClass,
-    inputErrorClass,
-    inactiveButtonClass,
+    inputErrorClass
   } = validElement;
   const inputList = Array.from(
     formElement.querySelectorAll(`.${inputSelector}`)
@@ -93,10 +98,10 @@ const setEventListeners = (formElement, validElement) => {
         inputErrorClass,
         errorClass
       );
-      toggleButtonState(inputList, saveButton, inactiveButtonClass);
+      toggleButtonState(inputList, saveButton);
     });
   });
-  toggleButtonState(inputList, saveButton, inactiveButtonClass);
+  toggleButtonState(inputList, saveButton);
 };
 
 const enableValidation = (validConfiguration) => {

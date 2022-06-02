@@ -46,7 +46,6 @@ function buttonAddPressed() {
 function openPopUp(popUp) {
   popUp.classList.add('popup_opened');
   document.addEventListener("keydown", escPressed);
-  document.addEventListener("mousedown", overlayClicked);
 }
 
 function closePopUp(popUp) {
@@ -61,7 +60,11 @@ const overlayClicked = (e) => {
     closePopUp(popup)
   };
 };
-document.removeEventListener("mousedown", overlayClicked)
+
+profilePopUp.addEventListener("mousedown", overlayClicked)
+placePopUp.addEventListener("mousedown", overlayClicked)
+popupOpenCard.addEventListener("mousedown", overlayClicked)
+
 const escPressed = (e) => {
   if (e.key !== 'Escape') {
     return;
@@ -149,9 +152,5 @@ function cardFormSubmitHandler(e) {
   disableButton(buttonAddCardSubmit)
 };
 
-function disableButton(saveButton) {
-  saveButton.classList.add("popup__save-button_disabled");
-  saveButton.disabled = true;
-}
 popupAddCardForm.addEventListener('submit', cardFormSubmitHandler);
 
