@@ -1,32 +1,31 @@
+import Card from "./Card.js"
+import {initialCards} from "./cards.js"
+
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector(".profile__name");
 const profileSecondary = profile.querySelector(".profile__subtitle");
 const profileNameInput = profile.querySelector('.popup__input_profile_name');
 const profileSecondaryInput = profile.querySelector('.popup__input_profile_secondary');
 const profileCard = document.querySelector('.profile__card');
-const profileSubtitle = profileCard.querySelector('.profile__subtitle');
-const profileAvatar = profileCard.querySelector('.profile__avatar');
+profileCard.querySelector('.profile__subtitle');
+profileCard.querySelector('.profile__avatar');
 const buttonEdit = profile.querySelector('.profile__button_edit');
 const buttonAdd = profile.querySelector('.profile__button_add');
-const buttonSubmit = profile.querySelector(".popup__save-button")
-
-
+profile.querySelector(".popup__save-button");
 const profilePopUp = document.querySelector("#profile__popup");
 const placePopUp = document.querySelector("#add_place");
 const popUpForm = document.querySelector("#popup__form");
-const buttonPlaceSubmit = placePopUp.querySelector(".popup__save-button")
-
+placePopUp.querySelector(".popup__save-button");
 const placeInput = document.querySelector('#place-name-input');
 const imageInput = document.querySelector('#place-link-input');
-
-const elementTemplate = document.querySelector("#elements-template").content.querySelector('.element');
+document.querySelector("#elements-template").content.querySelector('.element');
 const elementsContainer = document.querySelector(".elements");
 
 
 
-const popupOpenCard = document.querySelector('.popup_open-card');
-const popupOpenCardImage = popupOpenCard.querySelector('.popup__image');
-const popupOpenCardPlaceName = popupOpenCard.querySelector('.popup__place-name');
+export const popupOpenCard = document.querySelector('.popup_open-card');
+export const popupOpenCardImage = popupOpenCard.querySelector('.popup__image');
+export const popupOpenCardPlaceName = popupOpenCard.querySelector('.popup__place-name');
 
 const buttonPlaceClosePopUp = document.querySelector("#place-close-button")
 const buttonCloseProfilePopUp = document.querySelector('#profile-close-button');
@@ -43,7 +42,7 @@ function buttonAddPressed() {
   openPopUp(placePopUp);
 }
 
-function openPopUp(popUp) {
+export function openPopUp(popUp) {
   popUp.classList.add('popup_opened');
   document.addEventListener("keydown", escPressed);
 }
@@ -58,7 +57,7 @@ const overlayClicked = (e) => {
   const popup = e.target;
   if (popup.classList.contains("popup")) {
     closePopUp(popup)
-  };
+  }
 };
 
 profilePopUp.addEventListener("mousedown", overlayClicked)
@@ -88,52 +87,16 @@ buttonPlaceClosePopUp.addEventListener("click", () => closePopUp(placePopUp));
 buttonCloseProfilePopUp.addEventListener("click", () => closePopUp(profilePopUp));
 buttonCloseImagePopUp.addEventListener("click", () => closePopUp(popupOpenCard));
 
-/// Удаление карточки
-
-const deleteElement = (e) => {
-  e.target.closest('.element').remove();
-};
-
-//Открытие карты
-
-const handleImageClick = (e) => {
-  clickedImage = e.target;
-  popupOpenCardPlaceName.textContent = clickedImage.parentNode.querySelector(".element__title").textContent;
-  popupOpenCardImage.src = clickedImage.src;
-  popupOpenCardImage.alt = clickedImage.name;
-  openPopUp(popupOpenCard);
-};
-
-/// Лайканье
-const processLikeButton = (e) => {
-  e.target.classList.toggle("element__like-button_active")
-};
 
 /// Создание карт
-const createCard = (cardsData) => {
+const createCard = (name, link) => {
 
-  const elementCard = elementTemplate.cloneNode(true);
-
-  const cardTitle = elementCard.querySelector('.element__title');
-  const cardLink = elementCard.querySelector('.element__image');
-
-  cardTitle.textContent = cardsData.name;
-  cardLink.src = cardsData.link;
-  cardLink.alt = cardsData.name;
-
-
-  const deleteButton = elementCard.querySelector('.element__delete-button');
-  deleteButton.addEventListener('click', deleteElement);
-
-  const likeButton = elementCard.querySelector('#like-button');
-  likeButton.addEventListener("click", processLikeButton)
-  cardLink.addEventListener('click', handleImageClick);
-
-  return elementCard;
+  const card = new Card(name, link, "#elements-template")
+  return card._createCard();
 }
 
 const renderCard = (cardsData) => {
-  elementsContainer.prepend(createCard(cardsData));
+  elementsContainer.prepend(createCard(cardsData.name, cardsData.link));
 };
 
 initialCards.forEach((cardsData) => {
@@ -150,7 +113,7 @@ function cardFormSubmitHandler(e) {
   closePopUp(popupAddCard);
   popupAddCardForm.reset();
   disableButton(buttonAddCardSubmit)
-};
+}
 
 popupAddCardForm.addEventListener('submit', cardFormSubmitHandler);
 
