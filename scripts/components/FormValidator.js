@@ -22,7 +22,7 @@ export class FormValidator {
 
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
-    this._inputSelector.classList.add(this._inputErrorClass);
+    inputElement.classList.add(this._inputErrorClass);
   };
   _checkInputValidity = (inputElement) => {
     if (!inputElement.validity.valid) {
@@ -63,13 +63,13 @@ export class FormValidator {
     });
     this._toggleButtonState(this._inputList, this._saveButton);
   };
-  _enableValidation = (validConfiguration) => {
-    this._form = validConfiguration;
-    this._inputList.forEach((formElement) => {
-      formElement.addEventListener("submit", (evt) => {
+  _enableValidation = () => {
+    this._inputList.forEach((inputElement) => {
+      inputElement.addEventListener("submit", (evt) => {
         evt.preventDefault();
+        this._setEventListeners();
       });
-      this._setEventListeners(formElement, validConfiguration);
+      this._setEventListeners();
     });
   };
 }
