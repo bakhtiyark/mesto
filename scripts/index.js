@@ -1,5 +1,6 @@
-import Card from "./Card.js"
-import {initialCards} from "./cards.js"
+import Card from "./components/Card.js"
+import { initialCards, config } from "./components/constants.js"
+import {FormValidator} from "./components/FormValidator.js"
 
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector(".profile__name");
@@ -101,6 +102,11 @@ const renderCard = (cardsData) => {
 
 initialCards.forEach((cardsData) => {
   renderCard(cardsData);
+});
+const formValidators = {};
+Array.from(document.forms).forEach((formElement) => {
+  formValidators[formElement.name] = new FormValidator(config, formElement);
+  formValidators[formElement.name]._enableValidation();
 });
 
 const popupAddCard = document.querySelector('#add_place');

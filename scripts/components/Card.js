@@ -1,4 +1,4 @@
-import {openPopUp, popupOpenCard, popupOpenCardImage, popupOpenCardPlaceName} from "./index.js";
+import { openPopUp, popupOpenCard, popupOpenCardImage, popupOpenCardPlaceName } from "../index.js";
 
 class Card {
     constructor(name, link, cardSelector) {
@@ -43,7 +43,7 @@ class Card {
         popupOpenCardImage.alt = this._name;
         openPopUp(popupOpenCard);
     };
-/// Удаление карточки
+    /// Удаление карточки
 
     _deleteElement = () => {
         this._element.remove();
