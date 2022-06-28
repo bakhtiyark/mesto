@@ -11,7 +11,8 @@ export class FormValidator {
   }
 
   _hideInputError = (inputElement) => {
-    const errorElement = this._form.querySelector(`.${this._inputSelector.id}-error`);
+    const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
+
     errorElement.classList.remove(this._errorClass);
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.textContent = "";
@@ -40,19 +41,11 @@ export class FormValidator {
   };
   _toggleButtonState = (inputList, saveButton) => {
     if (this._hasInvalidInput(inputList)) {
-      this._disableButton(saveButton)
+      disableButton(saveButton, this._inactiveButtonClass)
     } else {
-      this._enableButton(saveButton);
+      enableButton(saveButton, this._inactiveButtonClass);
     }
   };
-  _disableButton(saveButton) {
-    saveButton.classList.add(this._inactiveButtonClass);
-    saveButton.disabled = true;
-  }
-  _enableButton(saveButton) {
-    saveButton.classList.remove(this._inactiveButtonClass);
-    saveButton.disabled = false;
-  }
 
   _setEventListeners = () => {
     this._inputList.forEach((inputElement) => {
@@ -72,4 +65,13 @@ export class FormValidator {
       this._setEventListeners();
     });
   };
+}
+
+export function disableButton(saveButton, inactiveButtonClass) {
+  saveButton.classList.add(inactiveButtonClass);
+  saveButton.disabled = true;
+}
+function enableButton(saveButton, inactiveButtonClass) {
+  saveButton.classList.remove(inactiveButtonClass);
+  saveButton.disabled = false;
 }
