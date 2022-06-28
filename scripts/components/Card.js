@@ -19,10 +19,11 @@ class Card {
     _createCard() {
 
         this._element = this._selectTemplate()
+        this._elementImage = this._element.querySelector('.element__image')
 
         this._element.querySelector('.element__title').textContent = this._name;
-        this._element.querySelector('.element__image').alt = this._name;
-        this._element.querySelector('.element__image').src = this._link;
+        this._elementImage.alt = this._name;
+        this._elementImage.src = this._link;
 
         this._deleteButton = this._element.querySelector('.element__delete-button');
         this._likeButton = this._element.querySelector('#like-button');
@@ -50,9 +51,7 @@ class Card {
     };
 
     _setEventListeners() {
-        this._element
-            .querySelector("#element-image")
-            .addEventListener("click", () => {
+        this._elementImage.addEventListener("click", () => {
                 this._handleImageClick();
             });
 

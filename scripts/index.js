@@ -106,7 +106,7 @@ initialCards.forEach((cardsData) => {
 const formValidators = {};
 Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.name] = new FormValidator(config, formElement);
-  formValidators[formElement.name]._enableValidation();
+  formValidators[formElement.name].enableValidation();
 });
 
 const popupAddCard = document.querySelector('#add_place');
