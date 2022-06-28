@@ -7,7 +7,6 @@ const profileName = profile.querySelector(".profile__name");
 const profileSecondary = profile.querySelector(".profile__subtitle");
 const profileNameInput = profile.querySelector('.popup__input_profile_name');
 const profileSecondaryInput = profile.querySelector('.popup__input_profile_secondary');
-const profileCard = document.querySelector('.profile__card');
 const buttonEdit = profile.querySelector('.profile__button_edit');
 const buttonAdd = profile.querySelector('.profile__button_add');
 const profilePopUp = document.querySelector("#profile__popup");
@@ -69,14 +68,14 @@ const pressedEsc = (e) => {
   closePopUp(popUp);
 };
 
-function profileCardUpdate(e) {
+function updateProfileCard(e) {
   e.preventDefault();
   profileName.textContent = profileNameInput.value;
   profileSecondary.textContent = profileSecondaryInput.value;
   closePopUp(profilePopUp);
 }
 
-popUpForm.addEventListener("submit", profileCardUpdate);
+popUpForm.addEventListener("submit", updateProfileCard);
 buttonEdit.addEventListener("click", pressedEditButton);
 buttonAdd.addEventListener("click", pressedAddButton);
 
