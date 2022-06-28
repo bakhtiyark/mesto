@@ -28,25 +28,25 @@ const buttonPlaceClosePopUp = document.querySelector("#place-close-button")
 const buttonCloseProfilePopUp = document.querySelector('#profile-close-button');
 const buttonCloseImagePopUp = document.querySelector('#image-close-button');
 
-function editButtonPressed() {
+function pressedEditButton() {
   profileNameInput.value = profileName.textContent;
   profileSecondaryInput.value = profileSecondary.textContent;
   openPopUp(profilePopUp)
 }
 
 
-function addButtonPressed() {
+function pressedAddButton() {
   openPopUp(placePopUp);
 }
 
 export function openPopUp(popUp) {
   popUp.classList.add('popup_opened');
-  document.addEventListener("keydown", escPressed);
+  document.addEventListener("keydown", pressedEsc);
 }
 
 function closePopUp(popUp) {
   popUp.classList.remove('popup_opened');
-  document.removeEventListener("keydown", escPressed);
+  document.removeEventListener("keydown", pressedEsc);
 }
 
 
@@ -61,7 +61,7 @@ profilePopUp.addEventListener("mousedown", clickOverlay)
 placePopUp.addEventListener("mousedown", clickOverlay)
 popupOpenCard.addEventListener("mousedown", clickOverlay)
 
-const escPressed = (e) => {
+const pressedEsc = (e) => {
   if (e.key !== 'Escape') {
     return;
   }
@@ -77,8 +77,8 @@ function profileCardUpdate(e) {
 }
 
 popUpForm.addEventListener("submit", profileCardUpdate);
-buttonEdit.addEventListener("click", editButtonPressed);
-buttonAdd.addEventListener("click", addButtonPressed);
+buttonEdit.addEventListener("click", pressedEditButton);
+buttonAdd.addEventListener("click", pressedAddButton);
 
 buttonPlaceClosePopUp.addEventListener("click", () => closePopUp(placePopUp));
 buttonCloseProfilePopUp.addEventListener("click", () => closePopUp(profilePopUp));
