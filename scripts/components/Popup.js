@@ -1,33 +1,29 @@
 export class Popup {
     constructor(popupSelector) {
         this._popupSelector = popupSelector
+        this._button = this._popupSelector.querySelector('.popup__close-button');
+        this._handleEscClose = this.__handleEscClose.bind(this);
     }
     openPopUp() {
         this._popupSelector.classList.add('popup_opened');
         document.addEventListener("keydown", pressedEsc);
     }
-    closePopUp(popUp) {
-        popUp.classList.remove('popup_opened');
+    closePopUp() {
+        this._popupSelector.classList.remove('popup_opened');
         document.removeEventListener("keydown", pressedEsc);
     }
-    _pressedEsc(e) {
+    _handleEscClose(e) {
         if (e.key !== 'Escape') {
             return;
         }
-        const popUp = document.querySelector('.popup_opened');
-        closePopUp(popUp);
+        this.closePopUp();
     };
     setEventListeners() {
-        this._elementImage.addEventListener("click", () => {
-                this._handleImageClick();
-            });
-
-        // Слушатель на лайки
-        this._likeButton.addEventListener("click", () => {
-            this._processLikeButton();
+        this._popupSelector.addEventListener('click', e => {
+            if (e.target.classList.contains('popup')) {
+                this.closePopUp();
+            }
         });
-        // Слушатель на удаление
-        this._deleteButton.addEventListener("click", this._deleteElement);
+        this._button.addEventListener('click', this.closePopUp.bind(this));
     }
-
 }
