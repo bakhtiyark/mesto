@@ -4,7 +4,7 @@
     border-radius: 2px;
     background-color: #000;
     color: #fff;
-    width: 100%;
+    width: 358px;
     font-family: Inter, Arial, sans-serif;
     font-size: 18px;
     line-height: 22px;
@@ -14,6 +14,8 @@
     cursor: pointer;
     transition: .2s ease-in-out;
     margin-top: 45px;
+    position: absolute;
+    bottom: 36px;
 }
 
 .popup__save-button:hover {
@@ -26,5 +28,7 @@
         height: 46px;
         font-size: 14px;
         line-height: 17px;
+        width: 238px;
+        bottom:25px;
     }
 }

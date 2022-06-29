@@ -14,7 +14,6 @@ const placePopUp = document.querySelector("#add_place");
 const popUpForm = document.querySelector("#popup__form");
 const placeInput = document.querySelector('#place-name-input');
 const imageInput = document.querySelector('#place-link-input');
-document.querySelector("#elements-template").content.querySelector('.element');
 const elementsContainer = document.querySelector(".elements");
 
 
