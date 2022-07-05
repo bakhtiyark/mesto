@@ -1,10 +1,12 @@
-import { openPopUp, popupOpenCard, popupOpenCardImage, popupOpenCardPlaceName } from "../index.js";
+import {popupOpenCard, popupOpenCardImage, popupOpenCardPlaceName } from "./constants.js";
+import {openPopUp} from "../index.js"
 
 class Card {
-    constructor(name, link, cardSelector) {
+    constructor(name, link, cardSelector, handleCardClick = this._handleImageClick) {
         this._name = name;
         this._link = link;
         this._cardSelector = cardSelector;
+        this._handleCardClick = handleCardClick
     }
 
     _selectTemplate() {
