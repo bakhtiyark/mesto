@@ -1,38 +1,49 @@
 import Card from "./components/Card.js"
-import { 
-  initialCards, 
+import {
+  initialCards,
   config,
   profilePopUp,
-  elementsContainer, 
-  popupAddCard,
+  elementsContainer,
   profileName,
   profileNameInput,
   profileSecondary,
+  buttonAddCardSubmit,
   profileSecondaryInput,
-  popupOpenCard,
+  buttonAdd,
   currentUser,
   buttonEdit
 } from "./components/constants.js"
-import {FormValidator, disableButton}  from "./components/FormValidator.js"
-import Popup from "./components/Popup.js";
-import PopupWithForm  from "./components/PopupWithForm.js";
-import PopupWithImage  from "./components/PopupWithImage.js";
-import UserInfo  from "./components/UserInfo.js";
+import { FormValidator, disableButton } from "./components/FormValidator.js"
+import PopupWithForm from "./components/PopupWithForm.js";
+import PopupWithImage from "./components/PopupWithImage.js";
+import UserInfo from "./components/UserInfo.js";
+import Section from "./components/Section.js";
 
-//const popupWithImage = new PopupWithImage(popupOpenCard);
-//popupWithImage.setEventListeners();
 
+
+// Попап иллюстрации
+const popupWithImage = new PopupWithImage('.popup_open-card');
+popupWithImage.setEventListeners();
+
+//Данные пользователя
 const userInfo = new UserInfo(currentUser)
 
+//Попап добавления новой карточки
 const addCardPopup = new PopupWithForm('#add_place', cardFormSubmitHandler)
 addCardPopup.setEventListeners();
+buttonAdd.addEventListener("click", () =>
+  addCardPopup.openPopUp())
 
+
+
+//Попап с редактированием профиля
 const profileCardPopup = new PopupWithForm("#profile__popup", updateProfileCard)
 profileCardPopup.setEventListeners();
 buttonEdit.addEventListener("click", () => {
   pressedEditButton(userInfo.getUserInfo())
   profileCardPopup.openPopUp()
 })
+
 
 function pressedAddButton() {
   openPopUp(placePopUp);
@@ -43,12 +54,6 @@ export function openPopUp(popUp) {
   document.addEventListener("keydown", pressedEsc);
 }
 
-function closePopUp(popUp) {
-  popUp.classList.remove('popup_opened');
-  document.removeEventListener("keydown", pressedEsc);
-}
-
-
 const clickOverlay = (e) => {
   const popup = e.target;
   if (popup.classList.contains("popup")) {
@@ -56,20 +61,17 @@ const clickOverlay = (e) => {
   }
 };
 
-const pressedEsc = (e) => {
-  if (e.key !== 'Escape') {
-    return;
-  }
-  const popUp = document.querySelector('.popup_opened');
-  closePopUp(popUp);
-};
+function cardFormSubmitHandler({ name, link }) {
+  renderCard({ name, link });
+  disableButton(buttonAddCardSubmit, config.inactiveButtonClass)
+}
 
-function updateProfileCard({profileFormName, profileFormSecondary}) {
+function updateProfileCard({ profileFormName, profileFormSecondary }) {
   profileName.textContent = profileFormName;
   profileSecondary.textContent = profileFormSecondary;
   closePopUp(profilePopUp);
 }
-function pressedEditButton({profileName, profileSecondary}) {
+function pressedEditButton({ profileName, profileSecondary }) {
   profileNameInput.value = profileName;
   profileSecondaryInput.value = profileSecondary;
   openPopUp(profilePopUp)
@@ -85,9 +87,9 @@ const renderCard = (cardsData) => {
   elementsContainer.prepend(createCard(cardsData.name, cardsData.link));
 };
 
-initialCards.forEach((cardsData) => {
-  renderCard(cardsData);
-});
+// Секции
+const cardsContainer = new Section({ data: initialCards, renderer: renderCard }, ".elements")
+cardsContainer.renderItems()
 
 const formValidators = {};
 Array.from(document.forms).forEach((formElement) => {
@@ -96,11 +98,18 @@ Array.from(document.forms).forEach((formElement) => {
 });
 
 
-function cardFormSubmitHandler(e) {
-  e.preventDefault();
-  renderCard({ name: placeInput.value, link: imageInput.value });
-  closePopUp(popupAddCard);
-  popupAddCardForm.reset();
-  disableButton(buttonAddCardSubmit, config.inactiveButtonClass)
+
+
+function closePopUp(popUp) {
+  popUp.classList.remove('popup_opened');
+  document.removeEventListener("keydown", pressedEsc);
 }
+
+const pressedEsc = (e) => {
+  if (e.key !== 'Escape') {
+    return;
+  }
+  const popUp = document.querySelector('.popup_opened');
+  closePopUp(popUp);
+};
 

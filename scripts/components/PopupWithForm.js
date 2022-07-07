@@ -6,17 +6,20 @@ export default class PopupWithForm extends Popup {
     this._cardFormSubmitHandler = cardFormSubmitHandler;
     this._popupForm = this._popupSelector.querySelector('.popup__form')
     this._popupButtonForm = this._popupForm.querySelector('.popup__save-button')
-    this._addButton = document.querySelector(".profile__button_add")
+    this._inputList = this._popupForm.querySelectorAll('.popup__input')
   }
 
   _getInputValues() {
-    this._inputList = this._popupForm.querySelectorAll('.popup__input')
-    this._formValues = {}
+    const formValues = {}
     this._inputList.forEach(input => {
-      this._formValues[input.name] = input.value
+      formValues[input.name] = input.value
     })
-    //console.dir(this._formValues)
-    return this._formValues
+    //console.dir(formValues)
+    return formValues
+  }
+  close() {
+    super.closePopUp();
+    this._popupForm.reset();
   }
 
   _formSubmit() {
@@ -25,16 +28,12 @@ export default class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners()
-    this._addButton.addEventListener("click", this.openPopUp.bind(this))
     this._popupForm.addEventListener('submit', (e) => {
-      e.preventDefault()
-      this._formSubmit()
+      e.preventDefault();
+      this._formSubmit();
+      this.close();
     })
-    this._popupForm.addEventListener('submit', this._formSubmit.bind(this));
   }
 
-  close() {
-    super.close()
-    this._popupForm.reset()
-  }
+
 }

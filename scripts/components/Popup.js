@@ -18,7 +18,9 @@ export default class Popup {
         this.closePopUp();
     };
     setEventListeners() {
-        
+        this._popupSelector.addEventListener("keydown", (e) =>{
+            this._handleEscClose
+        })
         this._popupSelector.addEventListener('click', e => {
             if (e.target.classList.contains('popup__close') ) {
                 this.closePopUp();
