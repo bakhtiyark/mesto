@@ -1,5 +1,5 @@
 import {popupOpenCard, popupOpenCardImage, popupOpenCardPlaceName } from "./constants.js";
-import {openPopUp} from "../index.js"
+import {openPopUp} from "../../pages/index.js"
 
 class Card {
     constructor(name, link, cardSelector, handleCardClick = this._handleImageClick) {
