@@ -1,4 +1,5 @@
 import Card from "../scripts/components/Card.js"
+import "./index.css"
 import {
   initialCards,
   config,
