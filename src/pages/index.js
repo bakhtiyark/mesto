@@ -40,14 +40,9 @@ buttonEdit.addEventListener("click", () => {
   pressedEditButton(userInfo.getUserInfo())
   profileCardPopup.openPopUp()
 })
-
-
-const clickOverlay = (e) => {
-  const popup = e.target;
-  if (popup.classList.contains("popup")) {
-    closePopUp(popup)
-  }
-};
+document.addEventListener("click", e => {
+  console.dir(e.target)
+})
 
 function cardFormSubmitHandler({ name, link }) {
   renderCard({ name, link });
