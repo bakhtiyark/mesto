@@ -1,9 +1,7 @@
 import Card from "../scripts/components/Card.js"
-
 import {
   initialCards,
   config,
-  profilePopUp,
   elementsContainer,
   profileName,
   profileNameInput,
@@ -13,7 +11,7 @@ import {
   buttonAdd,
   currentUser,
   buttonEdit
-} from "../scripts/components/constants.js"
+} from "../utils/constants.js"
 import { FormValidator, disableButton } from "../scripts/components/FormValidator.js"
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
@@ -35,8 +33,6 @@ addCardPopup.setEventListeners();
 buttonAdd.addEventListener("click", () =>
   addCardPopup.openPopUp())
 
-
-
 //Попап с редактированием профиля
 const profileCardPopup = new PopupWithForm("#profile__popup", updateProfileCard)
 profileCardPopup.setEventListeners();
@@ -45,15 +41,6 @@ buttonEdit.addEventListener("click", () => {
   profileCardPopup.openPopUp()
 })
 
-
-function pressedAddButton() {
-  openPopUp(placePopUp);
-}
-
-export function openPopUp(popUp) {
-  popUp.classList.add('popup_opened');
-  document.addEventListener("keydown", pressedEsc);
-}
 
 const clickOverlay = (e) => {
   const popup = e.target;
@@ -70,18 +57,18 @@ function cardFormSubmitHandler({ name, link }) {
 function updateProfileCard({ profileFormName, profileFormSecondary }) {
   profileName.textContent = profileFormName;
   profileSecondary.textContent = profileFormSecondary;
-  closePopUp(profilePopUp);
+  profileCardPopup.closePopUp();
 }
 function pressedEditButton({ profileName, profileSecondary }) {
   profileNameInput.value = profileName;
   profileSecondaryInput.value = profileSecondary;
-  openPopUp(profilePopUp)
+  profileCardPopup.openPopUp()
 }
 /// Создание карт
 const createCard = (name, link) => {
 
-  const card = new Card(name, link, "#elements-template")
-  return card._createCard();
+  const card = new Card(name, link, "#elements-template", popupWithImage.open)
+  return card.createCard();
 }
 
 const renderCard = (cardsData) => {
@@ -96,21 +83,4 @@ const formValidators = {};
 Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.name] = new FormValidator(config, formElement);
   formValidators[formElement.name].enableValidation();
-});
-
-
-
-
-function closePopUp(popUp) {
-  popUp.classList.remove('popup_opened');
-  document.removeEventListener("keydown", pressedEsc);
-}
-
-const pressedEsc = (e) => {
-  if (e.key !== 'Escape') {
-    return;
-  }
-  const popUp = document.querySelector('.popup_opened');
-  closePopUp(popUp);
-};
-
+}); 

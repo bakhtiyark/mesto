@@ -3,7 +3,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = {
-    mode: "production",     
+    mode: "production",
     entry: {
         main: "./src/pages/index.js",
 
@@ -26,6 +26,10 @@ module.exports = {
                 },
             },
             {
+                test: /\.html?$/,
+                use: ["html-loader"],
+            },
+            {
                 test: /\.(png|svg|jpg|jpeg|gif)$/,
                 type: "asset/resource",
                 generator: {
@@ -33,14 +37,21 @@ module.exports = {
                 }
             },
             {
+                test: /\.(woff(2)?|eot|ttf|otf)$/,
+                type: "asset/resource",
+                generator: {
+                    filename: "fonts/[name].[hash][ext]",
+                },
+            },
+            {
                 test: /\.css$/i,
                 use: [
                     MiniCssExtractPlugin.loader, {
                         loader: "css-loader",
                         options: {
-                          importLoaders: 1,
+                            importLoaders: 1,
                         },
-                      }, {
+                    }, {
                         loader: "postcss-loader"
                     }
                 ]

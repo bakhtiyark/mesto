@@ -4,6 +4,7 @@ export default class Popup {
         this._button = this._popupSelector.querySelector('.popup__close');
     }
     openPopUp() {
+        console.dir(this._popupSelector)
         this._popupSelector.classList.add('popup_opened');
         document.addEventListener("keydown", this.__handleEscClose);
     }

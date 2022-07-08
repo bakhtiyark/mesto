@@ -1,8 +1,5 @@
-import {popupOpenCard, popupOpenCardImage, popupOpenCardPlaceName } from "./constants.js";
-import {openPopUp} from "../../pages/index.js"
-
 class Card {
-    constructor(name, link, cardSelector, handleCardClick = this._handleImageClick) {
+    constructor(name, link, cardSelector, handleCardClick) {
         this._name = name;
         this._link = link;
         this._cardSelector = cardSelector;
@@ -18,7 +15,7 @@ class Card {
 
     }
 
-    _createCard() {
+    createCard() {
 
         this._element = this._selectTemplate()
         this._elementImage = this._element.querySelector('.element__image')
@@ -40,21 +37,20 @@ class Card {
             .classList.toggle("element__like-button_active")
     };
 
-    _handleImageClick() {
-        popupOpenCardPlaceName.textContent = this._name
-        popupOpenCardImage.src = this._link;
-        popupOpenCardImage.alt = this._name;
-        openPopUp(popupOpenCard);
+    _handleImageClick = () => {
+        this._handleCardClick({
+            link:this._link, 
+            name:this._name});
     };
-    /// Удаление карточки
 
     _deleteElement = () => {
         this._element.remove();
     };
 
     _setEventListeners() {
-        this._elementImage.addEventListener("click", () => {
-                this._handleImageClick();
+        this._elementImage.addEventListener("click", () => {    
+            this._handleImageClick();
+                
             });
 
         // Слушатель на лайки
