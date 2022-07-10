@@ -18,7 +18,7 @@ export class FormValidator {
     errorElement.textContent = "";
   };
   _showInputError = (inputConfig) => {
-    const {inputElement, errorMessage} = inputConfig;
+    const { inputElement, errorMessage } = inputConfig;
     const errorElement = this._form.querySelector(`.${inputElement.id}-error`);
 
     errorElement.textContent = errorMessage;
@@ -28,7 +28,7 @@ export class FormValidator {
   _checkInputValidity = (inputElement) => {
     if (!inputElement.validity.valid) {
       const errorMessage = inputElement.validationMessage;
-      this._showInputError({inputElement, errorMessage})
+      this._showInputError({ inputElement, errorMessage })
     } else {
       this._hideInputError(inputElement);
     }
@@ -41,15 +41,26 @@ export class FormValidator {
   };
   _toggleButtonState = (inputList, saveButton) => {
     if (this._hasInvalidInput(inputList)) {
-      disableButton(saveButton, this._inactiveButtonClass)
+      saveButton.classList.add(this._inactiveButtonClass);
+      saveButton.disabled = true;
     } else {
-      enableButton(saveButton, this._inactiveButtonClass);
+      saveButton.classList.remove(this._inactiveButtonClass);
+      saveButton.disabled = false;
     }
   };
+  resetValidation() {
+    this._toggleButtonState(this._inputList, this._saveButton);
+
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement)
+    });
+
+  }
 
   _setEventListeners = () => {
     this._inputList.forEach((inputElement) => {
-      inputElement.addEventListener("input", () => {
+      inputElement.addEventListener("input", (evt) => {
+        evt.preventDefault();
         this._checkInputValidity(inputElement);
         this._toggleButtonState(this._inputList, this._saveButton);
       });
@@ -57,21 +68,6 @@ export class FormValidator {
     this._toggleButtonState(this._inputList, this._saveButton);
   };
   enableValidation = () => {
-    this._inputList.forEach((inputElement) => {
-      inputElement.addEventListener("submit", (evt) => {
-        evt.preventDefault();
-        this._setEventListeners();
-      });
-      this._setEventListeners();
-    });
+    this._setEventListeners();
   };
-}
-
-export function disableButton(saveButton, inactiveButtonClass) {
-  saveButton.classList.add(inactiveButtonClass);
-  saveButton.disabled = true;
-}
-function enableButton(saveButton, inactiveButtonClass) {
-  saveButton.classList.remove(inactiveButtonClass);
-  saveButton.disabled = false;
 }

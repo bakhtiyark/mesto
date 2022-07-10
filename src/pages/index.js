@@ -7,13 +7,12 @@ import {
   profileName,
   profileNameInput,
   profileSecondary,
-  buttonAddCardSubmit,
   profileSecondaryInput,
   buttonAdd,
   currentUser,
   buttonEdit
 } from "../utils/constants.js"
-import { FormValidator, disableButton } from "../scripts/components/FormValidator.js"
+import { FormValidator } from "../scripts/components/FormValidator.js"
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import UserInfo from "../scripts/components/UserInfo.js";
@@ -31,8 +30,10 @@ const userInfo = new UserInfo(currentUser)
 //Попап добавления новой карточки
 const addCardPopup = new PopupWithForm('#add_place', cardFormSubmitHandler)
 addCardPopup.setEventListeners();
-buttonAdd.addEventListener("click", () =>
-  addCardPopup.openPopUp())
+buttonAdd.addEventListener("click", () => {
+  addCardPopup.openPopUp()
+  formValidators["place-add"].resetValidation()
+})
 
 //Попап с редактированием профиля
 const profileCardPopup = new PopupWithForm("#profile__popup", updateProfileCard)
@@ -40,14 +41,11 @@ profileCardPopup.setEventListeners();
 buttonEdit.addEventListener("click", () => {
   pressedEditButton(userInfo.getUserInfo())
   profileCardPopup.openPopUp()
-})
-document.addEventListener("click", e => {
-  console.dir(e.target)
+  formValidators["profile-edit"].resetValidation()
 })
 
 function cardFormSubmitHandler({ name, link }) {
   renderCard({ name, link });
-  disableButton(buttonAddCardSubmit, config.inactiveButtonClass)
 }
 
 function updateProfileCard({ profileFormName, profileFormSecondary }) {
@@ -77,6 +75,6 @@ cardsContainer.renderItems()
 
 const formValidators = {};
 Array.from(document.forms).forEach((formElement) => {
-  formValidators[formElement.name] = new FormValidator(config, formElement);
-  formValidators[formElement.name].enableValidation();
+  formValidators[formElement.id] = new FormValidator(config, formElement);
+  formValidators[formElement.id].enableValidation();
 }); 

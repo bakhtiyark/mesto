@@ -39,7 +39,7 @@ export const currentUser = {
     profileSecondary: '.profile__subtitle',
 }
 
-
+export const updatedProfileCard = ".popup__new"
 export const profile = document.querySelector('.profile');
 export const profileName = profile.querySelector(".profile__name");
 export const profileSecondary = profile.querySelector(".profile__subtitle");
