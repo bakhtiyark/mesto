@@ -3,7 +3,6 @@ import Card from "../scripts/components/Card.js"
 import {
   initialCards,
   config,
-  elementsContainer,
   profileName,
   profileNameInput,
   profileSecondary,
@@ -66,7 +65,7 @@ const createCard = (name, link) => {
 }
 
 const renderCard = (cardsData) => {
-  elementsContainer.prepend(createCard(cardsData.name, cardsData.link));
+  cardsContainer.prependItem(createCard(cardsData.name, cardsData.link));
 };
 
 // Секции
