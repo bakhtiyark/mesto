@@ -3,9 +3,7 @@ import Card from "../scripts/components/Card.js"
 import {
   initialCards,
   config,
-  profileName,
   profileNameInput,
-  profileSecondary,
   profileSecondaryInput,
   buttonAdd,
   currentUser,
