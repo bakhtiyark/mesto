@@ -47,9 +47,8 @@ function cardFormSubmitHandler({ name, link }) {
   renderCard({ name, link });
 }
 
-function updateProfileCard({ profileFormName, profileFormSecondary }) {
-  profileName.textContent = profileFormName;
-  profileSecondary.textContent = profileFormSecondary;
+function updateProfileCard({profileFormName,profileFormSecondary}) {
+  userInfo.setUserInfo({name:profileFormName, info:profileFormSecondary})
   profileCardPopup.closePopUp();
 }
 function pressedEditButton({ profileName, profileSecondary }) {
