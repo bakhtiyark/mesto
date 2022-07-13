@@ -7,6 +7,7 @@ import {
   profileNameInput,
   profileSecondaryInput,
   buttonAdd,
+  baseUrl,
   currentUser,
   buttonEdit
 } from "../utils/constants.js"
@@ -75,3 +76,9 @@ Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.id] = new FormValidator(config, formElement);
   formValidators[formElement.id].enableValidation();
 }); 
+const api = new Api({baseUrl, token:{authorization: "c4df37c2-ee37-468d-b548-ff18699e058a"}});
+
+buttonAdd.addEventListener("click", () =>{
+  console.log(api.getInitialCards())
+  console.dir(api._token)
+})

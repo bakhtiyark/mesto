@@ -68,3 +68,5 @@ export const buttonCloseImagePopUp = document.querySelector('#image-close-button
 export const popupAddCard = document.querySelector('#add_place');
 export const popupAddCardForm = document.querySelector('#place-add');
 export const buttonAddCardSubmit = popupAddCardForm.querySelector(".popup__save-button")
+
+export const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-45'
