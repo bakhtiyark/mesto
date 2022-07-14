@@ -1,0 +1,17 @@
+.profile__avatar-replace {
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    min-height: 120px;
+    z-index: 99;
+  }
+  
+  .profile__avatar-place:hover {
+    background: rgba(0, 0, 0, 0.8) url('../../../images/edit-button.svg') center / 26px no-repeat;
+    outline: 2px solid black;
+    opacity: 1;
+  }
+  
