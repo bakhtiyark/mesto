@@ -18,6 +18,7 @@ import UserInfo from "../scripts/components/UserInfo.js";
 import Section from "../scripts/components/Section.js";
 import "../pages/index.css"
 
+const api = new Api({baseUrl, token:{authorization: "c4df37c2-ee37-468d-b548-ff18699e058a"}});
 
 // Попап иллюстрации
 const popupWithImage = new PopupWithImage('.popup_open-card');
@@ -68,6 +69,7 @@ const renderCard = (cardsData) => {
 };
 
 // Секции
+
 const cardsContainer = new Section({ data: initialCards, renderer: renderCard }, ".elements")
 cardsContainer.renderItems()
 
@@ -76,9 +78,9 @@ Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.id] = new FormValidator(config, formElement);
   formValidators[formElement.id].enableValidation();
 }); 
-const api = new Api({baseUrl, token:{authorization: "c4df37c2-ee37-468d-b548-ff18699e058a"}});
 
 buttonAdd.addEventListener("click", () =>{
-  console.log(api.getInitialCards())
-  console.dir(api._token)
+api.getInitialCards()
+api.getUserInfo()
 })
+

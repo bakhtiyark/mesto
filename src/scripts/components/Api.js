@@ -11,6 +11,13 @@ export class Api {
         console.log(result);
       });
   }
+  getUserInfo(){
+    fetch(`${this._url}/users/me`,{
+      headers: this._token}).then(res => res.json())
+      .then((result) => {
+        console.log(result);
+      });
+  }
 }
 
 
