@@ -1,6 +1,6 @@
 import Card from "../scripts/components/Card.js"
-import {Api} from "../scripts/components/Api.js"
-
+import { Api } from "../scripts/components/Api.js"
+import { pressedEditButton, updateProfileCard, cardFormSubmitHandler } from "../utils/utils.js"
 import {
   initialCards,
   config,
@@ -18,7 +18,7 @@ import UserInfo from "../scripts/components/UserInfo.js";
 import Section from "../scripts/components/Section.js";
 import "../pages/index.css"
 
-const api = new Api({baseUrl, token:{authorization: "c4df37c2-ee37-468d-b548-ff18699e058a"}});
+const api = new Api({ baseUrl, token: { authorization: "c4df37c2-ee37-468d-b548-ff18699e058a" } });
 
 // Попап иллюстрации
 const popupWithImage = new PopupWithImage('.popup_open-card');
@@ -44,19 +44,6 @@ buttonEdit.addEventListener("click", () => {
   formValidators["profile-edit"].resetValidation()
 })
 
-function cardFormSubmitHandler({ name, link }) {
-  renderCard({ name, link });
-}
-
-function updateProfileCard({profileFormName,profileFormSecondary}) {
-  userInfo.setUserInfo({name:profileFormName, info:profileFormSecondary})
-  profileCardPopup.closePopUp();
-}
-function pressedEditButton({ profileName, profileSecondary }) {
-  profileNameInput.value = profileName;
-  profileSecondaryInput.value = profileSecondary;
-  profileCardPopup.openPopUp()
-}
 /// Создание карт
 const createCard = (name, link) => {
 
@@ -77,10 +64,10 @@ const formValidators = {};
 Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.id] = new FormValidator(config, formElement);
   formValidators[formElement.id].enableValidation();
-}); 
+});
 
-buttonAdd.addEventListener("click", () =>{
-api.getInitialCards()
-api.getUserInfo()
+buttonAdd.addEventListener("click", () => {
+  api.getInitialCards()
+  api.getUserInfo()
 })
 
