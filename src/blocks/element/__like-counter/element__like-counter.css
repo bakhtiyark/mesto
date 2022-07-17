@@ -1,10 +1,5 @@
 .element__like-counter{
-position: absolute;
-width: 10px;
-height: 13px;
-left: 445px;
-top: 657px;
-
+margin: 0;
 font-family: 'Inter';
 font-style: normal;
 font-weight: 400;

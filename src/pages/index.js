@@ -1,6 +1,6 @@
 import Card from "../scripts/components/Card.js"
 import { Api } from "../scripts/components/Api.js"
-import { pressedEditButton, updateProfileCard, cardFormSubmitHandler } from "../utils/utils.js"
+import { cardFormSubmitHandler } from "../utils/utils.js"
 import {
   initialCards,
   config,
@@ -18,7 +18,10 @@ import UserInfo from "../scripts/components/UserInfo.js";
 import Section from "../scripts/components/Section.js";
 import "../pages/index.css"
 
-const api = new Api({ baseUrl, token: { authorization: "c4df37c2-ee37-468d-b548-ff18699e058a" } });
+const api = new Api({ 
+  baseUrl, 
+  token: { authorization: "c4df37c2-ee37-468d-b548-ff18699e058a" } 
+});
 
 // Попап иллюстрации
 const popupWithImage = new PopupWithImage('.popup_open-card');
@@ -36,7 +39,7 @@ buttonAdd.addEventListener("click", () => {
 })
 
 //Попап с редактированием профиля
-const profileCardPopup = new PopupWithForm("#profile__popup", updateProfileCard)
+export const profileCardPopup = new PopupWithForm("#profile__popup", updateProfileCard)
 profileCardPopup.setEventListeners();
 buttonEdit.addEventListener("click", () => {
   pressedEditButton(userInfo.getUserInfo())
@@ -67,7 +70,27 @@ Array.from(document.forms).forEach((formElement) => {
 });
 
 buttonAdd.addEventListener("click", () => {
-  api.getInitialCards()
-  api.getUserInfo()
+  console.dir(api.getInitialCards())
+  console.dir(api.getUserInfo())
 })
 
+
+ function updateProfileCard({ name, about }) {
+  api.getUserInfo({
+    name: name.trim(),
+    info: about.trim(),
+  })
+    .then(result => {
+      profileCardPopup.close();
+      userInfo.setUserInfo({
+        name: result.name,
+        info: result.about,
+      });
+    })
+    .catch(console.log)
+}
+ function pressedEditButton({ profileName, profileSecondary }) {
+  profileNameInput.value = profileName;
+  profileSecondaryInput.value = profileSecondary;
+  profileCardPopup.openPopUp()
+}

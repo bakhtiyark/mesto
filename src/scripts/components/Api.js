@@ -1,3 +1,10 @@
+const onError = res => {
+  if (res.ok) {
+    return res.json()
+  }
+  return Promise.reject(new Error("Ошибка"))
+}
+
 export class Api {
   constructor({ baseUrl, token }) {
     this._url = baseUrl
@@ -5,25 +12,24 @@ export class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._url}/cards`,{
-      headers: this._token}).then(res => res.json());
+    return fetch(`${this._url}/cards`, {
+      headers: this._token
+    }).then(res => onError(res));
   }
-  getUserInfo(){
-    return fetch(`${this._url}/users/me`,{
-      headers: this._token}).then(res => res.json())
-      .then((result) => {
-        console.log(result);
-      });
+  getUserInfo() {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._token,
+    })
+      .then(res => onError(res));
   }
-  setLike(card, likeElement){
+  setLike(card, likeElement) {
     return fetch(`${this._url}/like/${card}`, {
       method: likeElement ? 'PUT' : 'DELETE',
       headers: this._token,
-    })
-      .then(this._getJson);
+    }).this(res => onError(res))
 
   }
-  addCard(data){
+  addCard(data) {
     return fetch(`${this._url}/`, {
       method: "POST",
       headers: this._token,
