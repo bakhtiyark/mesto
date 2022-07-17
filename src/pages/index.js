@@ -18,9 +18,9 @@ import UserInfo from "../scripts/components/UserInfo.js";
 import Section from "../scripts/components/Section.js";
 import "../pages/index.css"
 
-const api = new Api({ 
-  baseUrl, 
-  token: { authorization: "c4df37c2-ee37-468d-b548-ff18699e058a" } 
+const api = new Api({
+  baseUrl,
+  token: { authorization: "c4df37c2-ee37-468d-b548-ff18699e058a" }
 });
 
 // Попап иллюстрации
@@ -72,25 +72,15 @@ Array.from(document.forms).forEach((formElement) => {
 buttonAdd.addEventListener("click", () => {
   console.dir(api.getInitialCards())
   console.dir(api.getUserInfo())
+  console.dir(userInfo.getUserInfo())
 })
 
 
- function updateProfileCard({ name, about }) {
-  api.getUserInfo({
-    name: name.trim(),
-    info: about.trim(),
-  })
-    .then(result => {
-      profileCardPopup.close();
-      userInfo.setUserInfo({
-        name: result.name,
-        info: result.about,
-      });
-    })
-    .catch(console.log)
-}
- function pressedEditButton({ profileName, profileSecondary }) {
-  profileNameInput.value = profileName;
-  profileSecondaryInput.value = profileSecondary;
+function updateProfileCard({ name, about }) {
+  profileCardPopup.close();
+  api.setUserInfo({name, about})}
+function pressedEditButton({ name, about }) {
+  profileNameInput.value = name;
+  profileSecondaryInput.value = about;
   profileCardPopup.openPopUp()
 }

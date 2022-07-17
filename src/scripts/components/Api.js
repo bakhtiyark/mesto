@@ -12,15 +12,30 @@ export class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._url}/cards`, {
-      headers: this._token
-    }).then(res => onError(res));
+    return fetch(`${this._url}/cards`,
+      {
+        headers: this._token
+      })
+      .then(res => onError(res));
   }
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: this._token,
     })
       .then(res => onError(res));
+  }
+
+  setUserInfo(name, about) {
+    return fetch(`${this._url}/users/me`,
+      {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({
+          name,
+          about,
+        })
+      })
+      .then(onError)
   }
   setLike(card, likeElement) {
     return fetch(`${this._url}/like/${card}`, {

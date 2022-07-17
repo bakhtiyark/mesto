@@ -35,8 +35,9 @@ export const config = {
 };
 
 export const currentUser = {
-    profileName: '.profile__name',
-    profileSecondary: '.profile__subtitle',
+    name: '.profile__name',
+    about: '.profile__subtitle',
+    avatar: ".profile__avatar"
 }
 
 export const updatedProfileCard = ".popup__new"
