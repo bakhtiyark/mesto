@@ -28,14 +28,15 @@ export class Api {
   setUserInfo(name, about) {
     return fetch(`${this._url}/users/me`,
       {
-        method: 'PATCH',
+        method: 'POST',
         headers: this._headers,
         body: JSON.stringify({
-          name,
-          about,
+          name: name,
+          about: about
         })
+      }).then(res => {
+        return res
       })
-      .then(onError)
   }
   setLike(card, likeElement) {
     return fetch(`${this._url}/like/${card}`, {

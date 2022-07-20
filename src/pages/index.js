@@ -8,6 +8,7 @@ import {
   profileSecondaryInput,
   buttonAdd,
   baseUrl,
+  buttonAvatarEdit,
   currentUser,
   buttonEdit
 } from "../utils/constants.js"
@@ -20,9 +21,15 @@ import "../pages/index.css"
 
 const api = new Api({
   baseUrl,
-  token: { authorization: "c4df37c2-ee37-468d-b548-ff18699e058a" }
+  token: {
+    authorization: "c4df37c2-ee37-468d-b548-ff18699e058a",
+    'Content-Type': 'application/json'
+  }
 });
 
+// Попап замены аватара
+const popupWithAvatar = new PopupWithForm("#replace_avatar", cardFormSubmitHandler)
+popupWithAvatar.setEventListeners();
 // Попап иллюстрации
 const popupWithImage = new PopupWithImage('.popup_open-card');
 popupWithImage.setEventListeners();
@@ -69,16 +76,32 @@ Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.id].enableValidation();
 });
 
+api.getUserInfo().then((user) => {
+  userInfo.setUserInfo(user)
+  userInfo.setUserAvatar(user.avatar)
+}).catch(err => console.log(err))
+
+api.getInitialCards().then((cards) => {
+  cards.forEach(card => {
+    cardsContainer.prependItem(createCard(card.name,card.link))
+  })
+}).catch(err => console.log(err))
+
 buttonAdd.addEventListener("click", () => {
   console.dir(api.getInitialCards())
   console.dir(api.getUserInfo())
   console.dir(userInfo.getUserInfo())
+  console.dir(api.getAllData())
 })
 
-
+buttonAvatarEdit.addEventListener("click", () => {
+  popupWithAvatar.openPopUp()
+})
 function updateProfileCard({ name, about }) {
+  console.dir(api.setUserInfo({ name, about }))
+  api.setUserInfo({ name, about })
   profileCardPopup.close();
-  api.setUserInfo({name, about})}
+}
 function pressedEditButton({ name, about }) {
   profileNameInput.value = name;
   profileSecondaryInput.value = about;

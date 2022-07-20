@@ -55,7 +55,7 @@ export const placeInput = document.querySelector('#place-name-input');
 export const imageInput = document.querySelector('#place-link-input');
 export const elementsContainer = document.querySelector(".elements");
 
-
+export const buttonAvatarEdit = document.querySelector(".profile__avatar-replace")
 
 export const popupOpenCard = document.querySelector('.popup_open-card');
 export const popupOpenCardImage = popupOpenCard.querySelector('.popup__image');
