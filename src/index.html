@@ -37,7 +37,7 @@
                     <h2 class="popup__label">Обновить Аватар</h2>
                     <form class="popup__form" id="place-add" name="place-add" method="get" novalidate>
                         <div class="popup__input-wrapper">
-                            <input type="url" required class="popup__input popup__input_link" id="placelink-input"
+                            <input type="url" required class="popup__input popup__input_link" id="avatarlink-input"
                                 name="link" placeholder="Ссылка на картинку">
                             <span class="placelink-input-error"></span>
                         </div>
@@ -48,7 +48,7 @@
             <div class="profile__card">
                 <div class="profile__avatar-container">
                     <img class="profile__avatar" src="/src/images/profile-pic.png" alt="Аватар">
-                    <button type="button" class="profile__avatar-replace" type="button">
+                    <button class="profile__avatar-replace" type="button">
                     </button>
                 </div>
                 <div class="profile__info">
@@ -81,7 +81,7 @@
             </div>
             <div class="popup" id="confirm-delete">
                 <div class="popup__container popup__container_delete">
-                    <button class="popup__close-icon popup__close" type="button" id="place-close-button"
+                    <button class="popup__close-icon popup__close" type="button" id="delete-close-button"
                         name="place-close"></button>
                     <h2 class="popup__label">Вы уверены?</h2>
                     <form class="popup__form popup__form_delete-confirmation" id="place-delete" name="place-delete"
