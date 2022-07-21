@@ -1,56 +1,69 @@
-const onError = res => {
-  if (res.ok) {
-    return res.json()
-  }
-  return Promise.reject(new Error("Ошибка"))
-}
-
 export class Api {
   constructor({ baseUrl, token }) {
     this._url = baseUrl
     this._token = token
   }
-
+  _errorCheck = res => {
+    if (res.ok) {
+      return res.json()
+    }
+    return Promise.reject(new Error("Ошибка на" + res.status))
+  }
   getInitialCards() {
     return fetch(`${this._url}/cards`,
       {
         headers: this._token
       })
-      .then(res => onError(res));
+      .then(res => this._errorCheck(res));
   }
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: this._token,
     })
-      .then(res => onError(res));
+      .then(res => this._errorCheck(res));
   }
 
   setUserInfo(name, about) {
     return fetch(`${this._url}/users/me`,
       {
-        method: 'POST',
-        headers: this._headers,
+        method: 'PATCH',
+        headers: this._token,
         body: JSON.stringify({
           name: name,
           about: about
         })
-      }).then(res => {
-        return res
-      })
+      }).then(res => this._errorCheck(res))
+  }
+  setUserAvatar(link) {
+    console.log(this._token)
+    return fetch(`${this._url}/users/me/avatar`,
+      {
+        method: 'PATCH',
+        headers: this._token,
+        body: JSON.stringify({
+          avatar: link
+        })
+      }).then(res => this._errorCheck(res))
   }
   setLike(card, likeElement) {
     return fetch(`${this._url}/like/${card}`, {
       method: likeElement ? 'PUT' : 'DELETE',
       headers: this._token,
-    }).this(res => onError(res))
+    }).this(res => this._errorCheck(res))
 
   }
   addCard(data) {
-    return fetch(`${this._url}/`, {
+    return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._token,
       body: JSON.stringify(data)
     })
+  }
+  deleteCard(id) {
+    return fetch(`${this._url}/cards/${id}`, {
+      method: "DELETE",
+      headers: this._token
+    }).then(this._errorCheck)
   }
 }
 

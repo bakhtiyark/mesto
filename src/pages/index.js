@@ -1,6 +1,5 @@
 import Card from "../scripts/components/Card.js"
 import { Api } from "../scripts/components/Api.js"
-import { cardFormSubmitHandler } from "../utils/utils.js"
 import {
   initialCards,
   config,
@@ -28,7 +27,7 @@ const api = new Api({
 });
 
 // Попап замены аватара
-const popupWithAvatar = new PopupWithForm("#replace_avatar", cardFormSubmitHandler)
+const popupWithAvatar = new PopupWithForm("#replace_avatar", avatarUpdateHandler)
 popupWithAvatar.setEventListeners();
 // Попап иллюстрации
 const popupWithImage = new PopupWithImage('.popup_open-card');
@@ -45,6 +44,16 @@ buttonAdd.addEventListener("click", () => {
   formValidators["place-add"].resetValidation()
 })
 
+//Попап подтверждения удаления карточки
+const deleteCardPopup = new PopupWithForm('#confirm-delete', cardFormSubmitHandler)
+deleteCardPopup.setEventListeners();
+buttonAdd.addEventListener("click", () => {
+  addCardPopup.openPopUp()
+  formValidators["place-add"].resetValidation()
+})
+
+
+
 //Попап с редактированием профиля
 export const profileCardPopup = new PopupWithForm("#profile__popup", updateProfileCard)
 profileCardPopup.setEventListeners();
@@ -55,9 +64,15 @@ buttonEdit.addEventListener("click", () => {
 })
 
 /// Создание карт
-const createCard = (name, link) => {
+const createCard = (data) => {
 
-  const card = new Card(name, link, "#elements-template", popupWithImage.open)
+  const card = new Card(data, "#elements-template", popupWithImage.open, (id) => {
+    deleteCardPopup.openPopUp()
+    api.deleteCard(id).then(() => {
+      card.deleteCard()
+      deleteCardPopup.closePopUp()
+    })
+  })
   return card.createCard();
 }
 
@@ -76,31 +91,49 @@ Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.id].enableValidation();
 });
 
+//Данные юзера с сервера
+
 api.getUserInfo().then((user) => {
   userInfo.setUserInfo(user)
   userInfo.setUserAvatar(user.avatar)
 }).catch(err => console.log(err))
 
+//Карты с API
+
 api.getInitialCards().then((cards) => {
   cards.forEach(card => {
-    cardsContainer.prependItem(createCard(card.name,card.link))
+    cardsContainer.prependItem(createCard(card))
   })
 }).catch(err => console.log(err))
 
+
+
+function cardFormSubmitHandler({ name, link }) {
+  renderCard({ name, link });
+}
+//Замена аватара 
+
+function avatarUpdateHandler(data) {
+  api.setUserAvatar(data.link).then((res) => {
+    userInfo.setUserAvatar(res)
+
+  })
+}
 buttonAdd.addEventListener("click", () => {
   console.dir(api.getInitialCards())
-  console.dir(api.getUserInfo())
-  console.dir(userInfo.getUserInfo())
-  console.dir(api.getAllData())
 })
 
 buttonAvatarEdit.addEventListener("click", () => {
   popupWithAvatar.openPopUp()
 })
-function updateProfileCard({ name, about }) {
-  console.dir(api.setUserInfo({ name, about }))
-  api.setUserInfo({ name, about })
-  profileCardPopup.close();
+function updateProfileCard(data) {
+  console.dir(data)
+  api.setUserInfo(data.profileFormName, data.profileFormSecondary)
+    .then((user) => {
+      userInfo.setUserInfo(user.name, user.about)
+      profileCardPopup.closePopUp()
+    })
+    .catch(err => console.log(err))
 }
 function pressedEditButton({ name, about }) {
   profileNameInput.value = name;
