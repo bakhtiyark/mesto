@@ -236,6 +236,7 @@
     "core-js": "^3.23.3",
     "css-loader": "^6.7.1",
     "cssnano": "^5.1.12",
+    "gh-pages": "^4.0.0",
     "html-loader": "^3.1.2",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.1",
@@ -247,7 +248,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && webpack --mode production",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
