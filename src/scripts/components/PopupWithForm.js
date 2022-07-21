@@ -21,6 +21,9 @@ export default class PopupWithForm extends Popup {
     super.closePopUp();
     this._popupForm.reset();
   }
+  customSubmit(newSubmit) {
+    this._handleSubmit = newSubmit
+  }
 
   _formSubmit() {
     this._handleSubmit(this._getInputValues())
@@ -34,6 +37,8 @@ export default class PopupWithForm extends Popup {
       this.close();
     })
   }
-
-
+  processLoading() {
+    const spinner = document.querySelector(".loading-spinner__container")
+    spinner.classList.toggle("loading-spinner_active")
+  }
 }

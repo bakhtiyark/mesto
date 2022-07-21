@@ -47,11 +47,6 @@ buttonAdd.addEventListener("click", () => {
 //Попап подтверждения удаления карточки
 const deleteCardPopup = new PopupWithForm('#confirm-delete', cardFormSubmitHandler)
 deleteCardPopup.setEventListeners();
-buttonAdd.addEventListener("click", () => {
-  addCardPopup.openPopUp()
-  formValidators["place-add"].resetValidation()
-})
-
 
 
 //Попап с редактированием профиля
@@ -62,17 +57,25 @@ buttonEdit.addEventListener("click", () => {
   profileCardPopup.openPopUp()
   formValidators["profile-edit"].resetValidation()
 })
-
+let userID = api.getUserInfo().then(res => res._id);
+console.dir(userID)
 /// Создание карт
 const createCard = (data) => {
 
   const card = new Card(data, "#elements-template", popupWithImage.open, (id) => {
     deleteCardPopup.openPopUp()
-    api.deleteCard(id).then(() => {
-      card.deleteCard()
-      deleteCardPopup.closePopUp()
+    deleteCardPopup.customSubmit(() => {
+      api.deleteCard(id).then(() => {
+        card.deleteCard()
+        deleteCardPopup.processLoading()
+        setTimeout(deleteCardPopup.processLoading, 1500)
+        deleteCardPopup.closePopUp()
+      })
     })
-  })
+  }, (id) => {
+    card._isLiked() ? api.removeLike(id) : api.addLike(id)
+  }, userID
+  )
   return card.createCard();
 }
 
@@ -108,8 +111,15 @@ api.getInitialCards().then((cards) => {
 
 
 
-function cardFormSubmitHandler({ name, link }) {
-  renderCard({ name, link });
+function cardFormSubmitHandler(newCard) {
+  addCardPopup.processLoading()
+  setTimeout(addCardPopup.processLoading, 1500)
+  api.createCard(newCard).then((data) => {
+    const newCard = createCard(data)
+    cardsContainer.prependItem(newCard)
+    addCardPopup.closePopUp()
+
+  })
 }
 //Замена аватара 
 
@@ -119,18 +129,19 @@ function avatarUpdateHandler(data) {
 
   })
 }
-buttonAdd.addEventListener("click", () => {
-  console.dir(api.getInitialCards())
-})
-
 buttonAvatarEdit.addEventListener("click", () => {
   popupWithAvatar.openPopUp()
 })
+
+//Обновление профиля
+
 function updateProfileCard(data) {
-  console.dir(data)
+  //console.dir(data)
   api.setUserInfo(data.profileFormName, data.profileFormSecondary)
     .then((user) => {
       userInfo.setUserInfo(user.name, user.about)
+      profileCardPopup.processLoading()
+      setTimeout(profileCardPopup.processLoading, 1500)
       profileCardPopup.closePopUp()
     })
     .catch(err => console.log(err))

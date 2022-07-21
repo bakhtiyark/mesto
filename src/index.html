@@ -84,7 +84,8 @@
                     <button class="popup__close-icon popup__close" type="button" id="place-close-button"
                         name="place-close"></button>
                     <h2 class="popup__label">Вы уверены?</h2>
-                    <form class="popup__form popup__form_delete-confirmation" id="place-delete" name="place-delete" method="get" novalidate>
+                    <form class="popup__form popup__form_delete-confirmation" id="place-delete" name="place-delete"
+                        method="get" novalidate>
                         <button type="submit" class="popup__save-button">Да</button>
                     </form>
                 </div>
@@ -101,6 +102,20 @@
                 <p class="popup__place-name"></p>
             </div>
         </div>
+        <div class="loading-spinner__container">
+            <div class="loading-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                Обновляем...
+            </div>
+        </div>
+
     </main>
     <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto</p>

@@ -7,7 +7,7 @@ export class Api {
     if (res.ok) {
       return res.json()
     }
-    return Promise.reject(new Error("Ошибка на" + res.status))
+    return Promise.reject(new Error("Ошибка на " + res.status))
   }
   getInitialCards() {
     return fetch(`${this._url}/cards`,
@@ -15,6 +15,17 @@ export class Api {
         headers: this._token
       })
       .then(res => this._errorCheck(res));
+  }
+  createCard(card) {
+    return fetch(`${this._url}/cards`,
+      {
+        method: 'POST',
+        headers: this._token,
+        body: JSON.stringify({
+          name: card.name,
+          link: card.link
+        })
+      }).then(res => this._errorCheck(res))
   }
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
@@ -35,7 +46,6 @@ export class Api {
       }).then(res => this._errorCheck(res))
   }
   setUserAvatar(link) {
-    console.log(this._token)
     return fetch(`${this._url}/users/me/avatar`,
       {
         method: 'PATCH',
@@ -45,20 +55,21 @@ export class Api {
         })
       }).then(res => this._errorCheck(res))
   }
-  setLike(card, likeElement) {
-    return fetch(`${this._url}/like/${card}`, {
-      method: likeElement ? 'PUT' : 'DELETE',
-      headers: this._token,
-    }).this(res => this._errorCheck(res))
+  addLike(id) {
+    return fetch(`${this._url}/cards/${id}/likes`,
+      {
+        method: 'PUT',
+        headers: this._token
+      }).then(res => this._errorCheck(res))
+  }
+  removeLike(id) {
+    return fetch(`${this._url}/cards/${id}/likes`,
+      {
+        method: 'DELETE',
+        headers: this._token
+      }).then(res => this._errorCheck(res))
+  }
 
-  }
-  addCard(data) {
-    return fetch(`${this._url}/cards`, {
-      method: "POST",
-      headers: this._token,
-      body: JSON.stringify(data)
-    })
-  }
   deleteCard(id) {
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
