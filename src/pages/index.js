@@ -85,7 +85,7 @@ const renderCard = (cardsData) => {
 
 // Секции
 
-const cardsContainer = new Section({ data: initialCards, renderer: renderCard }, ".elements")
+const cardsContainer = new Section({ data: null, renderer: renderCard }, ".elements")
 cardsContainer.renderItems()
 
 const formValidators = {};
