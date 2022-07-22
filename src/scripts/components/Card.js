@@ -9,6 +9,7 @@ class Card {
         this._handleCardDeletion = handleCardDeletion
         this._handleLike = handleLike
         this._userID = userID
+        this._owner = data.owner
     }
 
     _selectTemplate() {
@@ -24,6 +25,7 @@ class Card {
 
         this._element = this._selectTemplate()
         this._elementImage = this._element.querySelector('.element__image')
+
         //this._element.id = this._cardId
 
         this._element.querySelector('.element__title').textContent = this._name;
@@ -40,10 +42,10 @@ class Card {
     }
     _processLikeButton() {
         this._likeButton.classList.toggle("element__like-button_active")
-
     };
     _isLiked() {
         return this._likeCounter?.length !== 0
+        //this._likeCounter._id === this._userID
     }
 
     _handleImageClick = () => {
@@ -53,7 +55,7 @@ class Card {
         });
     };
 
-    _deleteElement = () => {
+    deleteElement = () => {
         this._element.remove();
         this._element = null
     };
@@ -65,6 +67,11 @@ class Card {
         // Слушатель на лайки
         this._likeButton.addEventListener("click", () => {
             this._handleLike(this._cardId)
+            this._processLikeButton()
+            console.dir(this._likeCounter)
+            console.dir(this._isLiked())
+            console.dir(this._userID)
+            console.dir(this._owner)
         });
         // Слушатель на удаление
         this._deleteButton.addEventListener("click", () => {

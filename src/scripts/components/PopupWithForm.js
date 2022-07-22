@@ -38,7 +38,6 @@ export default class PopupWithForm extends Popup {
     })
   }
   processLoading() {
-    const spinner = document.querySelector(".spinner")
-    spinner.classList.toggle("spinner_active")
+    super.processLoading();
   }
 }

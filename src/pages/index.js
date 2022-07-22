@@ -1,7 +1,6 @@
 import Card from "../scripts/components/Card.js"
 import { Api } from "../scripts/components/Api.js"
 import {
-  initialCards,
   config,
   profileNameInput,
   profileSecondaryInput,
@@ -15,6 +14,7 @@ import { FormValidator } from "../scripts/components/FormValidator.js"
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import UserInfo from "../scripts/components/UserInfo.js";
+import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation"
 import Section from "../scripts/components/Section.js";
 import "../pages/index.css"
 
@@ -45,7 +45,7 @@ buttonAdd.addEventListener("click", () => {
 })
 
 //Попап подтверждения удаления карточки
-const deleteCardPopup = new PopupWithForm('#confirm-delete', cardFormSubmitHandler)
+const deleteCardPopup = new PopupWithForm('#confirm-delete', "#place-delete", updateProfileCard)
 deleteCardPopup.setEventListeners();
 
 
@@ -57,8 +57,6 @@ buttonEdit.addEventListener("click", () => {
   profileCardPopup.openPopUp()
   formValidators["profile-edit"].resetValidation()
 })
-let userID = api.getUserInfo().then(res => res._id);
-console.dir(userID)
 /// Создание карт
 const createCard = (data) => {
 
@@ -66,15 +64,15 @@ const createCard = (data) => {
     deleteCardPopup.openPopUp()
     deleteCardPopup.customSubmit(() => {
       api.deleteCard(id).then(() => {
-        card.deleteCard()
+        card.deleteElement()
         deleteCardPopup.processLoading()
         setTimeout(deleteCardPopup.processLoading, 1500)
         deleteCardPopup.closePopUp()
-      })
+      }).catch(err => console.log(err))
     })
   }, (id) => {
     card._isLiked() ? api.removeLike(id) : api.addLike(id)
-  }, userID
+  }, api.getUserInfo().then(x => {return x._id})
   )
   return card.createCard();
 }
@@ -105,10 +103,9 @@ api.getUserInfo().then((user) => {
 
 api.getInitialCards().then((cards) => {
   cards.forEach(card => {
-    cardsContainer.prependItem(createCard(card))
+    cardsContainer.appendItem(createCard(card))
   })
 }).catch(err => console.log(err))
-
 
 
 function cardFormSubmitHandler(newCard) {
@@ -119,15 +116,16 @@ function cardFormSubmitHandler(newCard) {
     cardsContainer.prependItem(newCard)
     addCardPopup.closePopUp()
 
-  })
+  }).catch(err => console.log(err))
 }
 //Замена аватара 
 
 function avatarUpdateHandler(data) {
   api.setUserAvatar(data.link).then((res) => {
     userInfo.setUserAvatar(res)
-
-  })
+    popupWithAvatar.processLoading()
+    setTimeout(popupWithAvatar.processLoading, 1500)
+  }).catch(err => console.log(err))
 }
 buttonAvatarEdit.addEventListener("click", () => {
   popupWithAvatar.openPopUp()
@@ -137,7 +135,7 @@ buttonAvatarEdit.addEventListener("click", () => {
 
 function updateProfileCard(data) {
   //console.dir(data)
-  api.setUserInfo(data.profileFormName, data.profileFormSecondary)
+  api.setUserInfo(data)
     .then((user) => {
       userInfo.setUserInfo(user.name, user.about)
       profileCardPopup.processLoading()

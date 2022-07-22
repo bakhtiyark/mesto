@@ -74,7 +74,7 @@ export class Api {
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       headers: this._token
-    }).then(this._errorCheck)
+    }).then(this._errorCheck).catch(err => console.log(err))
   }
 }
 
