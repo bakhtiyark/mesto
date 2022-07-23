@@ -27,7 +27,7 @@ const api = new Api({
 });
 
 // Попап замены аватара
-const popupWithAvatar = new PopupWithForm("#replace_avatar", avatarUpdateHandler)
+const popupWithAvatar = new PopupWithConfirmation("#replace_avatar", "#avatar-add")
 popupWithAvatar.setEventListeners();
 // Попап иллюстрации
 const popupWithImage = new PopupWithImage('.popup_open-card');
@@ -43,6 +43,12 @@ buttonAdd.addEventListener("click", () => {
   addCardPopup.openPopUp()
   formValidators["place-add"].resetValidation()
 })
+
+// Функция подтверждения
+function handleDeleteCard(id) {
+  
+
+}
 
 //Попап подтверждения удаления карточки
 const deleteCardPopup = new PopupWithForm('#confirm-delete', "#place-delete", updateProfileCard)
@@ -64,15 +70,15 @@ const createCard = (data) => {
     deleteCardPopup.openPopUp()
     deleteCardPopup.customSubmit(() => {
       api.deleteCard(id).then(() => {
-        card.deleteElement()
+        //card.deleteElement() 
         deleteCardPopup.processLoading()
         setTimeout(deleteCardPopup.processLoading, 1500)
         deleteCardPopup.closePopUp()
       }).catch(err => console.log(err))
     })
   }, (id) => {
-    card._isLiked() ? api.removeLike(id) : api.addLike(id)
-  }, api.getUserInfo().then(x => {return x._id})
+    card.isLiked() ? api.removeLike(id) : api.addLike(id)
+  }, api.getUserInfo().then(x => { return x._id })
   )
   return card.createCard();
 }
@@ -103,7 +109,7 @@ api.getUserInfo().then((user) => {
 
 api.getInitialCards().then((cards) => {
   cards.forEach(card => {
-    cardsContainer.appendItem(createCard(card))
+    cardsContainer.prependItem(createCard(card))
   })
 }).catch(err => console.log(err))
 
@@ -135,7 +141,7 @@ buttonAvatarEdit.addEventListener("click", () => {
 
 function updateProfileCard(data) {
   //console.dir(data)
-  api.setUserInfo(data)
+  api.setUserInfo(data.profileFormName, data.profileFormSecondary)
     .then((user) => {
       userInfo.setUserInfo(user.name, user.about)
       profileCardPopup.processLoading()

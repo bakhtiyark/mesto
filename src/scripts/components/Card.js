@@ -9,7 +9,7 @@ class Card {
         this._handleCardDeletion = handleCardDeletion
         this._handleLike = handleLike
         this._userID = userID
-        this._owner = data.owner
+        this._owner = data.owner._id
     }
 
     _selectTemplate() {
@@ -43,8 +43,9 @@ class Card {
     _processLikeButton() {
         this._likeButton.classList.toggle("element__like-button_active")
     };
-    _isLiked() {
-        return this._likeCounter?.length !== 0
+    isLiked() {
+        return this._likeCounter.some((x)=> x._id === this._userID)
+        //this._likeCounter?.length !== 0
         //this._likeCounter._id === this._userID
     }
 
@@ -69,7 +70,7 @@ class Card {
             this._handleLike(this._cardId)
             this._processLikeButton()
             console.dir(this._likeCounter)
-            console.dir(this._isLiked())
+            console.dir(this.isLiked())
             console.dir(this._userID)
             console.dir(this._owner)
         });

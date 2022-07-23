@@ -39,6 +39,10 @@ export const currentUser = {
     about: '.profile__subtitle',
     avatar: ".profile__avatar"
 }
+export const avatarConfig = {
+    popupSelector: "#replace-add",
+    formSelector: "#avatar-add"
+}
 
 export const updatedProfileCard = ".popup__new"
 export const profile = document.querySelector('.profile');

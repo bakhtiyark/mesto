@@ -4,9 +4,13 @@ export default class PopupWithForm extends Popup {
   constructor(popup, handleSubmit) {
     super(popup);
     this._handleSubmit = handleSubmit;
+
     this._popupForm = this._popup.querySelector('.popup__form')
     this._popupButtonForm = this._popupForm.querySelector('.popup__save-button')
+    
     this._inputList = this._popupForm.querySelectorAll('.popup__input')
+    this._getInputValues = this._getInputValues.bind(this)
+    this.close = this.close.bind(this)
   }
 
   _getInputValues() {
@@ -21,9 +25,9 @@ export default class PopupWithForm extends Popup {
     super.closePopUp();
     this._popupForm.reset();
   }
-  customSubmit(newSubmit) {
-    this._handleSubmit = newSubmit
-  }
+  //customSubmit(newSubmit) {
+  //  this._handleSubmit = newSubmit
+  //}
 
   _formSubmit() {
     this._handleSubmit(this._getInputValues())

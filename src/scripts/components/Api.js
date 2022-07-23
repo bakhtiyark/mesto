@@ -7,7 +7,7 @@ export class Api {
     if (res.ok) {
       return res.json()
     }
-    return Promise.reject(new Error("Ошибка на " + res.status))
+    return Promise.reject(new Error("Ошибка " + res.status))
   }
   getInitialCards() {
     return fetch(`${this._url}/cards`,
