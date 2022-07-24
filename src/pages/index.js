@@ -17,6 +17,7 @@ import UserInfo from "../scripts/components/UserInfo.js";
 import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation"
 import Section from "../scripts/components/Section.js";
 import "../pages/index.css"
+let userID;
 
 const api = new Api({
   baseUrl,
@@ -27,7 +28,7 @@ const api = new Api({
 });
 
 // Попап замены аватара
-const popupWithAvatar = new PopupWithConfirmation("#replace_avatar", "#avatar-add")
+const popupWithAvatar = new PopupWithForm("#replace_avatar", avatarUpdateHandler)
 popupWithAvatar.setEventListeners();
 // Попап иллюстрации
 const popupWithImage = new PopupWithImage('.popup_open-card');
@@ -44,14 +45,9 @@ buttonAdd.addEventListener("click", () => {
   formValidators["place-add"].resetValidation()
 })
 
-// Функция подтверждения
-function handleDeleteCard(id) {
-  
-
-}
 
 //Попап подтверждения удаления карточки
-const deleteCardPopup = new PopupWithForm('#confirm-delete', "#place-delete", updateProfileCard)
+const deleteCardPopup = new PopupWithConfirmation('#confirm-delete', "#place-delete", )
 deleteCardPopup.setEventListeners();
 
 
@@ -66,19 +62,9 @@ buttonEdit.addEventListener("click", () => {
 /// Создание карт
 const createCard = (data) => {
 
-  const card = new Card(data, "#elements-template", popupWithImage.open, (id) => {
-    deleteCardPopup.openPopUp()
-    deleteCardPopup.customSubmit(() => {
-      api.deleteCard(id).then(() => {
-        //card.deleteElement() 
-        deleteCardPopup.processLoading()
-        setTimeout(deleteCardPopup.processLoading, 1500)
-        deleteCardPopup.closePopUp()
-      }).catch(err => console.log(err))
-    })
-  }, (id) => {
-    card.isLiked() ? api.removeLike(id) : api.addLike(id)
-  }, api.getUserInfo().then(x => { return x._id })
+  const card = new Card(data, "#elements-template", popupWithImage.open, deleteCardHandler, (id) => {  
+    card.isLiked() ? api.removeLike(id).then(res => card.setLikes(res.likes)).catch(err => console.log(err)) : api.addLike(id).then(res => card.setLikes(res.likes)).catch(err => console.log(err))
+  }, userID
   )
   return card.createCard();
 }
@@ -103,7 +89,8 @@ Array.from(document.forms).forEach((formElement) => {
 api.getUserInfo().then((user) => {
   userInfo.setUserInfo(user)
   userInfo.setUserAvatar(user.avatar)
-}).catch(err => console.log(err))
+  userID = userInfo.getID(user)
+}).catch(err => console.log(err)).finally(() => popupWithAvatar.processLoading(false))
 
 //Карты с API
 
@@ -113,26 +100,37 @@ api.getInitialCards().then((cards) => {
   })
 }).catch(err => console.log(err))
 
+//добавление карты
 
 function cardFormSubmitHandler(newCard) {
-  addCardPopup.processLoading()
-  setTimeout(addCardPopup.processLoading, 1500)
+  addCardPopup.processLoading(true)
   api.createCard(newCard).then((data) => {
     const newCard = createCard(data)
     cardsContainer.prependItem(newCard)
     addCardPopup.closePopUp()
-
-  }).catch(err => console.log(err))
+  }).catch(err => console.log(err)).finally(()=> addCardPopup.processLoading(false))
 }
+
 //Замена аватара 
 
 function avatarUpdateHandler(data) {
+  popupWithAvatar.processLoading(true)
   api.setUserAvatar(data.link).then((res) => {
     userInfo.setUserAvatar(res)
-    popupWithAvatar.processLoading()
-    setTimeout(popupWithAvatar.processLoading, 1500)
-  }).catch(err => console.log(err))
+  }).catch(err => console.log(err)).finally(()=> popupWithAvatar.processLoading(false))
 }
+
+//Удаление карточки
+const deleteCardHandler = (id) => {
+    deleteCardPopup.openPopUp()
+    deleteCardPopup._confirmation(() => {
+      api.deleteCard(id).then(() => {
+        //card.deleteElement() 
+        deleteCardPopup.closePopUp()
+      }).catch(err => console.log(err))
+    })
+  }
+
 buttonAvatarEdit.addEventListener("click", () => {
   popupWithAvatar.openPopUp()
 })
@@ -141,17 +139,17 @@ buttonAvatarEdit.addEventListener("click", () => {
 
 function updateProfileCard(data) {
   //console.dir(data)
+  profileCardPopup.processLoading(true)
   api.setUserInfo(data.profileFormName, data.profileFormSecondary)
     .then((user) => {
       userInfo.setUserInfo(user.name, user.about)
-      profileCardPopup.processLoading()
-      setTimeout(profileCardPopup.processLoading, 1500)
       profileCardPopup.closePopUp()
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err)).finally(() => profileCardPopup.processLoading(false))
 }
 function pressedEditButton({ name, about }) {
   profileNameInput.value = name;
   profileSecondaryInput.value = about;
   profileCardPopup.openPopUp()
+  //console.dir(userID)
 }

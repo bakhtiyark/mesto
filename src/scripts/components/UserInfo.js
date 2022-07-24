@@ -21,8 +21,7 @@ export default class UserInfo {
     this._user.textContent = data?.name || "";
     this._info.textContent = data?.about || "";
     this._avatar.src = data?.avatar || "";
-
-
+    this._id = data?._id || "";
 
   }
 
@@ -33,5 +32,8 @@ export default class UserInfo {
   }
   setUserAvatar(avatar){
    this._avatar.src = avatar
+  }
+  getID(){
+    return this._id
   }
 }
