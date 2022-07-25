@@ -1,22 +1,19 @@
 import Popup from "./Popup";
 
 export default class PopupWithConfirmation extends Popup {
-    constructor(popup, formSelector, confirmation) {
+    constructor(popup, formSelector) {
         super(popup);
         this._form = document.querySelector(formSelector)
-        this._confirmation = confirmation
     }
-
-    _handleSubmit(e) {
-        e.preventDefault();
-        this._confirmation(this)
+    setSubmitHandler(newHandler){
+        this._handler = newHandler
     }
 
     setEventListeners() {
         super.setEventListeners()
         this._form.addEventListener('submit', (e) => {
             e.preventDefault();
-            this._confirmation(this);
+            this._handler(this);
         });
     }
 }

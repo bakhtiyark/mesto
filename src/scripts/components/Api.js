@@ -9,6 +9,11 @@ export class Api {
     }
     return Promise.reject(new Error("Ошибка " + res.status))
   }
+  getAllData(){
+    return Promise.all([this.getInitialCards(), this.getUserInfo()])
+  }
+
+
   getInitialCards() {
     return fetch(`${this._url}/cards`,
       {

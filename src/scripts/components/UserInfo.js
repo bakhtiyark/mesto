@@ -1,10 +1,8 @@
 export default class UserInfo {
-  constructor(data) {
-    const {name, about, avatar} = data
+  constructor({name,about,avatar}) {
     this._user = document.querySelector(name);
     this._info = document.querySelector(about);
     this._avatar = document.querySelector(avatar);
-    this._id = data.id
     this.getUserInfo = this.getUserInfo.bind(this)
     this.setUserInfo = this.setUserInfo.bind(this)
   }
@@ -18,10 +16,12 @@ export default class UserInfo {
   }
 
   setUserInfo(data) {
+    
     this._user.textContent = data?.name || "";
     this._info.textContent = data?.about || "";
     this._avatar.src = data?.avatar || "";
     this._id = data?._id || "";
+    
 
   }
 

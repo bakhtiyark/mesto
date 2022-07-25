@@ -27,6 +27,16 @@ const api = new Api({
   }
 });
 
+//Загрузка всей инфы с сервера
+api.getAllData().then(([cards, user]) =>{
+  userInfo.setUserInfo(user)
+  userInfo.setUserAvatar(user.avatar)
+  userID = userInfo.getID(user)
+  cards.forEach(card => {
+    cardsContainer.prependItem(createCard(card))
+  })
+}).catch(err => console.log(err))
+
 // Попап замены аватара
 const popupWithAvatar = new PopupWithForm("#replace_avatar", avatarUpdateHandler)
 popupWithAvatar.setEventListeners();
@@ -38,16 +48,15 @@ popupWithImage.setEventListeners();
 const userInfo = new UserInfo(currentUser)
 
 //Попап добавления новой карточки
-const addCardPopup = new PopupWithForm('#add_place', cardFormSubmitHandler)
+const addCardPopup = new PopupWithForm('#add_place', handlerCardFormSubmit)
 addCardPopup.setEventListeners();
 buttonAdd.addEventListener("click", () => {
   addCardPopup.openPopUp()
   formValidators["place-add"].resetValidation()
 })
 
-
 //Попап подтверждения удаления карточки
-const deleteCardPopup = new PopupWithConfirmation('#confirm-delete', "#place-delete", )
+const deleteCardPopup = new PopupWithConfirmation('#confirm-delete', "#place-delete")
 deleteCardPopup.setEventListeners();
 
 
@@ -84,25 +93,11 @@ Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.id].enableValidation();
 });
 
-//Данные юзера с сервера
 
-api.getUserInfo().then((user) => {
-  userInfo.setUserInfo(user)
-  userInfo.setUserAvatar(user.avatar)
-  userID = userInfo.getID(user)
-}).catch(err => console.log(err)).finally(() => popupWithAvatar.processLoading(false))
-
-//Карты с API
-
-api.getInitialCards().then((cards) => {
-  cards.forEach(card => {
-    cardsContainer.prependItem(createCard(card))
-  })
-}).catch(err => console.log(err))
 
 //добавление карты
 
-function cardFormSubmitHandler(newCard) {
+function handlerCardFormSubmit(newCard) {
   addCardPopup.processLoading(true)
   api.createCard(newCard).then((data) => {
     const newCard = createCard(data)
@@ -116,16 +111,19 @@ function cardFormSubmitHandler(newCard) {
 function avatarUpdateHandler(data) {
   popupWithAvatar.processLoading(true)
   api.setUserAvatar(data.link).then((res) => {
-    userInfo.setUserAvatar(res)
-  }).catch(err => console.log(err)).finally(()=> popupWithAvatar.processLoading(false))
+    userInfo.setUserAvatar(res.avatar)
+  }).catch(err => console.log(err)).finally(()=> {
+    popupWithAvatar.processLoading(false)
+    popupWithAvatar.closePopUp()
+  })
 }
 
 //Удаление карточки
 const deleteCardHandler = (id) => {
     deleteCardPopup.openPopUp()
-    deleteCardPopup._confirmation(() => {
+    deleteCardPopup.setSubmitHandler(() => {
       api.deleteCard(id).then(() => {
-        //card.deleteElement() 
+        //this.deleteElement() 
         deleteCardPopup.closePopUp()
       }).catch(err => console.log(err))
     })
@@ -142,10 +140,12 @@ function updateProfileCard(data) {
   profileCardPopup.processLoading(true)
   api.setUserInfo(data.profileFormName, data.profileFormSecondary)
     .then((user) => {
-      userInfo.setUserInfo(user.name, user.about)
+      userInfo.setUserInfo(user)
+    })
+    .catch(err => console.log(err)).finally(() => {
+      profileCardPopup.processLoading(false)
       profileCardPopup.closePopUp()
     })
-    .catch(err => console.log(err)).finally(() => profileCardPopup.processLoading(false))
 }
 function pressedEditButton({ name, about }) {
   profileNameInput.value = name;
