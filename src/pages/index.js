@@ -18,7 +18,6 @@ import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation"
 import Section from "../scripts/components/Section.js";
 import "../pages/index.css"
 let userID;
-
 const api = new Api({
   baseUrl,
   token: {
@@ -28,11 +27,11 @@ const api = new Api({
 });
 
 //Загрузка всей инфы с сервера
-api.getAllData().then(([cards, user]) =>{
+api.getAllData().then(([cards, user]) => {
   userInfo.setUserInfo(user)
   userInfo.setUserAvatar(user.avatar)
   userID = userInfo.getID(user)
-  cards.forEach(card => {
+  cards.reverse().forEach(card => {
     cardsContainer.prependItem(createCard(card))
   })
 }).catch(err => console.log(err))
@@ -71,9 +70,27 @@ buttonEdit.addEventListener("click", () => {
 /// Создание карт
 const createCard = (data) => {
 
-  const card = new Card(data, "#elements-template", popupWithImage.open, deleteCardHandler, (id) => {  
-    card.isLiked() ? api.removeLike(id).then(res => card.setLikes(res.likes)).catch(err => console.log(err)) : api.addLike(id).then(res => card.setLikes(res.likes)).catch(err => console.log(err))
-  }, userID
+  const card = new Card(
+    data,
+    "#elements-template",
+    popupWithImage.open,
+    (id) => {
+      deleteCardPopup.openPopUp()
+      deleteCardPopup.setSubmitHandler(() => {
+        api.deleteCard(id).then(() => {
+          card.deleteElement()
+          deleteCardPopup.closePopUp()
+        }).catch(err => console.log(err))
+      })
+    },
+    (id) => {
+      card.isLiked() ? api.removeLike(id)
+        .then(res => card.setLikes(res.likes))
+        .catch(err => console.log(err)) : api.addLike(id)
+          .then(res => card.setLikes(res.likes))
+          .catch(err => console.log(err))
+    },
+    userID
   )
   return card.createCard();
 }
@@ -102,8 +119,8 @@ function handlerCardFormSubmit(newCard) {
   api.createCard(newCard).then((data) => {
     const newCard = createCard(data)
     cardsContainer.prependItem(newCard)
-    addCardPopup.closePopUp()
-  }).catch(err => console.log(err)).finally(()=> addCardPopup.processLoading(false))
+    addCardPopup.close()
+  }).catch(err => console.log(err)).finally(() => addCardPopup.processLoading(false))
 }
 
 //Замена аватара 
@@ -112,22 +129,12 @@ function avatarUpdateHandler(data) {
   popupWithAvatar.processLoading(true)
   api.setUserAvatar(data.link).then((res) => {
     userInfo.setUserAvatar(res.avatar)
-  }).catch(err => console.log(err)).finally(()=> {
-    popupWithAvatar.processLoading(false)
     popupWithAvatar.closePopUp()
-  })
-}
-
-//Удаление карточки
-const deleteCardHandler = (id) => {
-    deleteCardPopup.openPopUp()
-    deleteCardPopup.setSubmitHandler(() => {
-      api.deleteCard(id).then(() => {
-        //this.deleteElement() 
-        deleteCardPopup.closePopUp()
-      }).catch(err => console.log(err))
+  }).catch(err => console.log(err))
+    .finally(() => {
+      popupWithAvatar.processLoading(false)
     })
-  }
+}
 
 buttonAvatarEdit.addEventListener("click", () => {
   popupWithAvatar.openPopUp()
@@ -141,10 +148,10 @@ function updateProfileCard(data) {
   api.setUserInfo(data.profileFormName, data.profileFormSecondary)
     .then((user) => {
       userInfo.setUserInfo(user)
+      profileCardPopup.closePopUp()
     })
     .catch(err => console.log(err)).finally(() => {
       profileCardPopup.processLoading(false)
-      profileCardPopup.closePopUp()
     })
 }
 function pressedEditButton({ name, about }) {

@@ -4,7 +4,7 @@ export class FormValidator {
     this._inputSelector = config.inputSelector
     this._inputList = Array.from(this._form.querySelectorAll(`.${this._inputSelector}`))
     this._submitButtonSelector = config.submitButtonSelector
-    this._inactiveButtonClass = config.inactiveButtonClass
+    this._inactiveButtonClass = config.inactiveButtonClass  
     this._inputErrorClass = config.inputErrorClass
     this._errorClass = config.errorClass
     this._saveButton = this._form.querySelector(`.${this._submitButtonSelector}`)
@@ -64,7 +64,7 @@ export class FormValidator {
         this._checkInputValidity(inputElement);
         this._toggleButtonState(this._inputList, this._saveButton);
       });
-    });
+    });     
     this._toggleButtonState(this._inputList, this._saveButton);
   };
   enableValidation = () => {
