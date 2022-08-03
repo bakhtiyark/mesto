@@ -17,7 +17,11 @@ import UserInfo from "../scripts/components/UserInfo.js";
 import PopupWithConfirmation from "../scripts/components/PopupWithConfirmation"
 import Section from "../scripts/components/Section.js";
 import "../pages/index.css"
+
 let userID;
+
+//Объявление API
+
 const api = new Api({
   baseUrl,
   token: {
@@ -95,6 +99,8 @@ const createCard = (data) => {
   return card.createCard();
 }
 
+//Отрисовка карт
+
 const renderCard = (cardsData) => {
   cardsContainer.prependItem(createCard(cardsData.name, cardsData.link));
 };
@@ -104,6 +110,8 @@ const renderCard = (cardsData) => {
 const cardsContainer = new Section({ data: [], renderer: renderCard }, ".elements")
 cardsContainer.renderItems()
 
+//Валидатор
+
 const formValidators = {};
 Array.from(document.forms).forEach((formElement) => {
   formValidators[formElement.id] = new FormValidator(config, formElement);
@@ -112,7 +120,7 @@ Array.from(document.forms).forEach((formElement) => {
 
 
 
-//добавление карты
+//Добавление карты
 
 function handlerCardFormSubmit(newCard) {
   addCardPopup.processLoading(true)
