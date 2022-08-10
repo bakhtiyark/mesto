@@ -22,13 +22,13 @@ let userID;
 
 //Объявление API
 
-const api = new Api({
-  baseUrl,
-  token: {
-    authorization: "c4df37c2-ee37-468d-b548-ff18699e058a",
-    'Content-Type': 'application/json'
-  }
-});
+  const api = new Api({
+    baseUrl,
+    token: {
+      authorization: "c4df37c2-ee37-468d-b548-ff18699e058a",
+      'Content-Type': 'application/json'
+    }
+  });
 
 //Загрузка всей инфы с сервера
 api.getAllData().then(([cards, user]) => {
